@@ -1,1 +1,13 @@
-<p>categories works!</p>
+<mat-grid-list
+  [cols]="breakpoint"
+  rowHeight="8:1.0"
+  (window:resize)="onResize($event)"
+>
+  <mat-chip-list>
+    <mat-grid-tile *ngFor="let categoria of categorias; let i = index">
+      <mat-chip id="i_{{ i }}">
+        {{ categoria.nombreCategoria }}
+      </mat-chip>
+    </mat-grid-tile>
+  </mat-chip-list>
+</mat-grid-list>

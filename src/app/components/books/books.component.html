@@ -1,1 +1,13 @@
-<p>books works!</p>
+<div class="base">
+  <div class="books-container">
+    <mat-grid-list
+      [cols]="breakpoint"
+      [rowHeight]="rowHeight"
+      (window:resize)="onResize($event)"
+    >
+      <mat-grid-tile *ngFor="let libro of libros">
+        <app-book-card [libro]="libro"></app-book-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>

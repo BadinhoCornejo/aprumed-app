@@ -1,0 +1,46 @@
+<mat-toolbar fxLayout="row" fxLayoutAlign="start start">
+  <div class="right-side">
+    <span [routerLink]="['/']">APRUMED</span>
+    <mat-form-field floatLabel="never" class="search-input">
+      <mat-icon matSuffix class="icon-placeholder"
+        ><i class="fa fa-search" aria-hidden="true"></i
+      ></mat-icon>
+      <input matInput placeholder="Buscar libros" />
+    </mat-form-field>
+  </div>
+
+  <span fxFlex></span>
+  <div class="left-side">
+    <button [matMenuTriggerFor]="menuNotifications">
+      <i
+        matBadge="9"
+        matBadgeColor="warn"
+        matBadgeSize="small"
+        class="fa fa-cart-arrow-down"
+        aria-hidden="true"
+      ></i>
+    </button>
+    <mat-menu #menuNotifications="matMenu" xPosition="before" class="menu-not">
+      <button mat-menu-item>Item 1</button>
+      <button mat-menu-item>Item 2</button>
+    </mat-menu>
+    <button [routerLink]="['/login']">
+      <p>Iniciar sesión</p>
+    </button>
+    <!--
+      <div class="avatar-container">
+            <button [matMenuTriggerFor]="menuAvatar">
+              <img src="..." alt="avatar" class="avatar-img" />
+            </button>
+            <mat-menu #menuAvatar="matMenu" xPosition="before" class="menu-not">
+              <button mat-menu-item>
+                <i class="fa fa-cog" aria-hidden="true"></i>Settings
+              </button>
+              <button mat-menu-item>
+                <i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out
+              </button>
+            </mat-menu>
+          </div>
+          -->
+  </div>
+</mat-toolbar>

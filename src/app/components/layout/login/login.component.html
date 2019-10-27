@@ -1,0 +1,55 @@
+<app-ext-app-toolbar></app-ext-app-toolbar>
+
+<div gdArea="content" class="content">
+  <div class="title">
+    <h1>Tu aventura está a punto de empezar</h1>
+  </div>
+  <div class="card-container">
+    <mat-card>
+      <div class="subtitle">
+        <p>Inicia sesión para poder comprar</p>
+      </div>
+      <div class="form-container">
+        <div class="login-container">
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Ingrese su Email" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Contraseña</mat-label>
+            <input
+              matInput
+              placeholder="Ingrese su contraseña"
+              [type]="!hide ? 'password' : 'text'"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+            >
+              <mat-icon>{{ !hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+          </mat-form-field>
+          <div class="sign-up-msg">
+            <p>
+              ¿No tienes una cuenta?<span [routerLink]="['/signup']"
+                >Regístrate</span
+              >
+            </p>
+          </div>
+          <div class="pass-helper">
+            <p>¿Olvidaste tu contraseña?</p>
+          </div>
+          <div class="button-container">
+            <button mat-button>¡Vamos!</button>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+<app-footer></app-footer>

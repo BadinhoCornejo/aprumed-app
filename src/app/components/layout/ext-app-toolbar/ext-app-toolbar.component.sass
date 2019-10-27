@@ -1,0 +1,54 @@
+@import './src/styles.sass'
+
+.mat-toolbar
+    @include ph(6em, 6em)
+    position: fixed
+    z-index: 1
+    overflow-x: 0
+    overflow-y: 0
+    top: 0
+    background-color: $base-color
+    box-shadow: rgba(#000000, 0.1) 0px 4px 11px
+    @media screen and ( max-width: $tablet ) 
+        @include ph(2em, 2em)
+
+    .right-side
+        height: 100% !important
+        display: flex
+        flex-direction: row
+        justify-content: center
+        span
+            font-family: $generic-font
+            margin-right: 24px
+            align-self: center
+            cursor: pointer
+            @media screen and ( max-width: $phone ) 
+                display: none
+
+        .mat-form-field
+            align-self: center
+            font-family: $generic-font
+            color: $secundary-color
+            font-size: 13px
+            .icon-placeholder
+                margin-right: 16px
+                cursor: pointer
+    .left-side
+        height: 100%
+        display: flex
+        flex-direction: row
+        justify-content: center
+        button
+            @include clearButton()
+            align-self: center !important
+            margin-right: 24px
+            font-family: $generic-font
+            font-size: 16px
+            @media screen and ( max-width: $phone )
+                margin-right: 0px
+            p
+                margin-bottom: 0px
+                @media screen and ( max-width: $phone )
+                    display: none
+            i
+                font-size: 20px
