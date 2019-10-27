@@ -10,16 +10,14 @@
     background-color: $base-color
     box-shadow: rgba(#000000, 0.1) 0px 4px 11px
     @media screen and ( max-width: $tablet ) 
-        @include ph(2em, 2em)
+        @include ph(4em, 4em)
 
     .right-side
         height: 100% !important
-        display: flex
-        flex-direction: row
-        justify-content: center
+        @include flex(row, center)
         span
             font-family: $generic-font
-            margin-right: 24px
+            margin-right: 3em
             align-self: center
             cursor: pointer
             @media screen and ( max-width: $phone ) 
@@ -35,13 +33,11 @@
                 cursor: pointer
     .left-side
         height: 100%
-        display: flex
-        flex-direction: row
-        justify-content: center
+        @include flex(row, center)
         button
             @include clearButton()
             align-self: center !important
-            margin-right: 24px
+            margin-right: 3em
             font-family: $generic-font
             font-size: 16px
             @media screen and ( max-width: $phone )
@@ -52,3 +48,24 @@
                     display: none
             i
                 font-size: 20px
+.avatar-container
+    align-self: center !important
+    @include mh(16px, null)
+    button
+        @include clearButton()
+    .avatar-img
+        vertical-align: middle
+        width: 50px
+        height: 50px
+        border-radius: 50%
+
+::ng-deep .menu-not
+    button:focus
+        outline: 0
+    button
+        @include pv(4px, 4px)
+        @include ph(14px, 10px)
+    i
+        font-size: 16px
+        @include ph(4px, 10px)
+        margin-right: 4px

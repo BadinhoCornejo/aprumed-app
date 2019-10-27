@@ -15,7 +15,14 @@ export class BooksComponent implements OnInit {
   constructor(private booksService: BooksService) {}
 
   ngOnInit() {
-    this.breakpoint = window.innerWidth <= 900 ? 1 : 4;
+    if (window.innerWidth <= 900) {
+      this.breakpoint = 1;
+    } else if (window.innerWidth <= 1100) {
+      this.breakpoint = 2;
+    } else {
+      this.breakpoint = 4;
+    }
+
     this.rowHeight = window.innerWidth <= 900 ? "1:1.2" : "1:1.5";
     this.listBooks();
   }
@@ -32,7 +39,13 @@ export class BooksComponent implements OnInit {
   }
 
   onResize(event: any) {
-    this.breakpoint = event.target.innerWidth <= 900 ? 1 : 4;
+    if (event.target.innerWidth <= 900) {
+      this.breakpoint = 1;
+    } else if (event.target.innerWidth <= 1100) {
+      this.breakpoint = 2;
+    } else {
+      this.breakpoint = 4;
+    }
     this.rowHeight = event.target.innerWidth <= 900 ? "1:1.2" : "1:1.5";
   }
 }

@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-ext-app-toolbar',
-  templateUrl: './ext-app-toolbar.component.html',
-  styleUrls: ['./ext-app-toolbar.component.sass']
+  selector: "app-ext-app-toolbar",
+  templateUrl: "./ext-app-toolbar.component.html",
+  styleUrls: ["./ext-app-toolbar.component.sass"]
 })
 export class ExtAppToolbarComponent implements OnInit {
+  user: any = JSON.parse(localStorage.getItem("user"));
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  signUp() {
+    localStorage.removeItem("user");
+    window.location.reload();
   }
-
 }

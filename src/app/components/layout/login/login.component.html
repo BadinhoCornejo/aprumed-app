@@ -10,10 +10,24 @@
         <p>Inicia sesión para poder comprar</p>
       </div>
       <div class="form-container">
-        <div class="login-container">
+        <form class="login-container" [formGroup]="form">
           <mat-form-field>
             <mat-label>Email</mat-label>
-            <input matInput placeholder="Ingrese su Email" />
+            <input
+              matInput
+              placeholder="Ingrese su Email"
+              formControlName="email"
+              [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+              type="text"
+            />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">
+                Por favor ingresar su Email
+              </div>
+              <div *ngIf="f.email.errors.email">
+                Debe ser una dirección de correo electrónico
+              </div>
+            </div>
           </mat-form-field>
 
           <mat-form-field>
@@ -22,8 +36,21 @@
               matInput
               placeholder="Ingrese su contraseña"
               [type]="!hide ? 'password' : 'text'"
+              formControlName="usrPassword"
+              [ngClass]="{ 'is-invalid': submitted && f.usrPassword.errors }"
             />
-            <button
+            <div
+              *ngIf="submitted && f.usrPassword.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.usrPassword.errors.required">
+                Por favor ingrese su contraseña
+              </div>
+              <div *ngIf="f.usrPassword.errors.minlength">
+                La contraseña debe contener al menos 6 caracteres
+              </div>
+            </div>
+            <a
               mat-icon-button
               matSuffix
               (click)="hide = !hide"
@@ -31,7 +58,7 @@
               [attr.aria-pressed]="hide"
             >
               <mat-icon>{{ !hide ? "visibility_off" : "visibility" }}</mat-icon>
-            </button>
+            </a>
           </mat-form-field>
           <div class="sign-up-msg">
             <p>
@@ -44,9 +71,11 @@
             <p>¿Olvidaste tu contraseña?</p>
           </div>
           <div class="button-container">
-            <button mat-button>¡Vamos!</button>
+            <button mat-button type="submit" (click)="onSubmit(form)">
+              ¡Vamos!
+            </button>
           </div>
-        </div>
+        </form>
       </div>
     </mat-card>
   </div>

@@ -24,23 +24,27 @@
       <button mat-menu-item>Item 1</button>
       <button mat-menu-item>Item 2</button>
     </mat-menu>
-    <button [routerLink]="['/login']">
+    <button [routerLink]="['/login']" *ngIf="user === null">
       <p>Iniciar sesión</p>
     </button>
-    <!--
-      <div class="avatar-container">
-            <button [matMenuTriggerFor]="menuAvatar">
-              <img src="..." alt="avatar" class="avatar-img" />
-            </button>
-            <mat-menu #menuAvatar="matMenu" xPosition="before" class="menu-not">
-              <button mat-menu-item>
-                <i class="fa fa-cog" aria-hidden="true"></i>Settings
-              </button>
-              <button mat-menu-item>
-                <i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out
-              </button>
-            </mat-menu>
-          </div>
-          -->
+
+    <div class="avatar-container" *ngIf="user !== null">
+      <button [matMenuTriggerFor]="menuAvatar">
+        <img
+          src="{{ user.avatar.url }}"
+          alt="{{ user.avatar.nombreAvatar }}"
+          class="avatar-img"
+        />
+      </button>
+
+      <mat-menu #menuAvatar="matMenu" xPosition="before" class="menu-not">
+        <button mat-menu-item>
+          <i class="fa fa-user" aria-hidden="true"></i>Perfil
+        </button>
+        <button mat-menu-item (click)="signUp()">
+          <i class="fa fa-sign-out" aria-hidden="true"></i>Cerrar sesión
+        </button>
+      </mat-menu>
+    </div>
   </div>
 </mat-toolbar>

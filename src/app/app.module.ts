@@ -14,7 +14,7 @@ import { ToastrModule } from "ngx-toastr";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatBadgeModule } from "@angular/material/badge";
 //Forms
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatListModule } from "@angular/material/list";
 import { MatInputModule } from "@angular/material/input";
 //Angular Material
@@ -89,6 +89,7 @@ import { SignupComponent } from "./components/layout/signup/signup.component";
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       {
         path: "",
