@@ -1,5 +1,5 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="start start">
-  <div class="right-side">
+  <div class="left-side">
     <span [routerLink]="['/']">APRUMED</span>
     <mat-form-field floatLabel="never" class="search-input">
       <mat-icon matSuffix class="icon-placeholder"
@@ -10,12 +10,12 @@
   </div>
 
   <span fxFlex></span>
-  <div class="left-side">
+  <div class="right-side">
     <button [matMenuTriggerFor]="menuNotifications">
       <i
         matBadge="9"
         matBadgeColor="warn"
-        matBadgeSize="small"
+        matBadgeSize="medium"
         class="fa fa-cart-arrow-down"
         aria-hidden="true"
       ></i>

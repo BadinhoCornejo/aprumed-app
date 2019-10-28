@@ -30,8 +30,13 @@ import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import { MatButtonModule } from "@angular/material/button";
+import { MatSidenavModule } from "@angular/material/sidenav";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
+//AUTHS
+import { AuthAdminGuard } from "./auth-admin.guard";
+import { AuthUserGuard } from "./auth-user.guard";
 
 //COMPONENTS
 import { AppComponent } from "./app.component";
@@ -105,7 +110,9 @@ import { SignupComponent } from "./components/layout/signup/signup.component";
       },
       {
         path: "admin",
-        component: IntAppLayoutComponent
+        component: IntAppLayoutComponent,
+        canActivate: [AuthAdminGuard],
+        canActivateChild: [AuthAdminGuard]
       }
     ]),
     ToastrModule.forRoot({
@@ -128,9 +135,17 @@ import { SignupComponent } from "./components/layout/signup/signup.component";
     MatCardModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSidenavModule
   ],
-  providers: [BooksService, UsersService, CategoriesService, SalesService],
+  providers: [
+    BooksService,
+    UsersService,
+    CategoriesService,
+    SalesService,
+    AuthAdminGuard,
+    AuthUserGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

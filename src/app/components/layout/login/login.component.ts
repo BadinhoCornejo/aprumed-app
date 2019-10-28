@@ -14,11 +14,11 @@ export class LoginComponent implements OnInit {
   user: any;
 
   constructor(
-    private _usersService: UsersService,
-    private _formBuilder: FormBuilder,
-    private _router: Router
+    private usersService: UsersService,
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
-    this.form = _formBuilder.group({
+    this.form = formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
       usrPassword: ["", [Validators.required, Validators.minLength(6)]]
     });
@@ -37,13 +37,17 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this._usersService.verificarAcceso(this.form.value).subscribe(
+    this.usersService.verificarAcceso(this.form.value).subscribe(
       result => {
         this.user = result;
         this.user && localStorage.setItem("user", JSON.stringify(this.user));
-        this.user.tipoUsuario.tipoUsuarioID === 1
-          ? this._router.navigate(["/"])
-          : this._router.navigate(["/admin"]);
+        if (this.user.tipoUsuario.tipoUsuarioID === 1) {
+          this.usersService.setIsAdminLog(false);
+          this.router.navigateByUrl("");
+        } else if (this.user.tipoUsuario.tipoUsuarioID === 2) {
+          this.usersService.setIsAdminLog(true);
+          this.router.navigateByUrl("admin");
+        }
       },
       error => {
         console.error(JSON.stringify(error));

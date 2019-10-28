@@ -10,14 +10,15 @@
     background-color: $base-color
     box-shadow: rgba(#000000, 0.1) 0px 4px 11px
     @media screen and ( max-width: $tablet ) 
-        @include ph(4em, 4em)
+        @include ph(1em, 1em)
 
-    .right-side
+    .left-side
         height: 100% !important
         @include flex(row, center)
         span
             font-family: $generic-font
-            margin-right: 3em
+            font-size: 30px
+            margin-right: 2em
             align-self: center
             cursor: pointer
             @media screen and ( max-width: $phone ) 
@@ -27,19 +28,19 @@
             align-self: center
             font-family: $generic-font
             color: $secundary-color
-            font-size: 13px
+            font-size: 16px
             .icon-placeholder
                 margin-right: 16px
                 cursor: pointer
-    .left-side
+    .right-side
         height: 100%
         @include flex(row, center)
         button
             @include clearButton()
             align-self: center !important
-            margin-right: 3em
+            margin-right: 2em
             font-family: $generic-font
-            font-size: 16px
+            font-size: 20px
             @media screen and ( max-width: $phone )
                 margin-right: 0px
             p
@@ -47,7 +48,9 @@
                 @media screen and ( max-width: $phone )
                     display: none
             i
-                font-size: 20px
+                font-size: 30px
+                @media screen and ( max-width: $phone )
+                    @include mh(2px, 4px)
 .avatar-container
     align-self: center !important
     @include mh(16px, null)
@@ -55,11 +58,14 @@
         @include clearButton()
     .avatar-img
         vertical-align: middle
-        width: 50px
-        height: 50px
+        width: 40px
+        height: 40px
         border-radius: 50%
-
+        @media screen and ( max-width: $phone )
+            @include mh(16px, 8px)
 ::ng-deep .menu-not
+    @media screen and ( max-width: $phone )
+        @include mh(null,16px)
     button:focus
         outline: 0
     button
