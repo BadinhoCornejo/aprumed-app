@@ -7,9 +7,21 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./ext-app-layout.component.sass"]
 })
 export class ExtAppLayoutComponent implements OnInit {
+  user: any;
+  welcomeName: String;
+
   constructor(private toastr: ToastrService) {
-    //Verify with session with localstorage
-    this.toastr.info("Inicia sesión para poder comprar", "¡Bienvenido!");
+    this.user = JSON.parse(localStorage.getItem("user"));
+
+    if (this.user !== null) {
+      this.welcomeName = this.user.nombre.split(" ", 1);
+      this.toastr.info(
+        "¿Buscas algo nuevo para leer?",
+        "¡Hola! " + this.welcomeName + "."
+      );
+    } else {
+      this.toastr.info("Inicia sesión para poder comprar", "¡Bienvenido!");
+    }
   }
 
   ngOnInit() {}

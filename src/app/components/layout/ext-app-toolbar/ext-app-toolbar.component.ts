@@ -12,7 +12,7 @@ export class ExtAppToolbarComponent implements OnInit {
 
   ngOnInit() {}
 
-  signUp() {
+  signOut() {
     localStorage.removeItem("user");
     window.location.reload();
   }

@@ -1,6 +1,8 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="start start">
   <div class="left-side">
     <span [routerLink]="['/']">APRUMED</span>
+  </div>
+  <div class="center-side">
     <mat-form-field floatLabel="never" class="search-input">
       <mat-icon matSuffix class="icon-placeholder"
         ><i class="fa fa-search" aria-hidden="true"></i
@@ -8,7 +10,6 @@
       <input matInput placeholder="Buscar libros" />
     </mat-form-field>
   </div>
-
   <span fxFlex></span>
   <div class="right-side">
     <button [matMenuTriggerFor]="menuNotifications">
@@ -37,11 +38,11 @@
         />
       </button>
 
-      <mat-menu #menuAvatar="matMenu" xPosition="before" class="menu-not">
+      <mat-menu #menuAvatar="matMenu" xPosition="before">
         <button mat-menu-item>
           <i class="fa fa-user" aria-hidden="true"></i>Perfil
         </button>
-        <button mat-menu-item (click)="signUp()">
+        <button mat-menu-item (click)="signOut()">
           <i class="fa fa-sign-out" aria-hidden="true"></i>Cerrar sesión
         </button>
       </mat-menu>

@@ -31,6 +31,12 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatTableModule } from "@angular/material/table";
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatSortModule } from "@angular/material/sort";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
@@ -38,11 +44,14 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AuthAdminGuard } from "./auth-admin.guard";
 import { AuthUserGuard } from "./auth-user.guard";
 
+//SERVICES
+import { BooksService } from "./services/books/books.service";
+import { CategoriesService } from "./services/categories/categories.service";
+import { SalesService } from "./services/sales/sales.service";
+import { UsersService } from "./services/users/users.service";
+
 //COMPONENTS
 import { AppComponent } from "./app.component";
-import { ExtNavbarComponent } from "./components/layout/ext-navbar/ext-navbar.component";
-import { IntNavbarComponent } from "./components/layout/int-navbar/int-navbar.component";
-import { IntSidebarComponent } from "./components/layout/int-sidebar/int-sidebar.component";
 import { ExtAppLayoutComponent } from "./components/layout/ext-app-layout/ext-app-layout.component";
 import { IntAppLayoutComponent } from "./components/layout/int-app-layout/int-app-layout.component";
 import { FooterComponent } from "./components/layout/footer/footer.component";
@@ -55,23 +64,23 @@ import { CartComponent } from "./components/cart/cart.component";
 import { SaleDetailComponent } from "./components/sale-detail/sale-detail.component";
 import { StoreLocationComponent } from "./components/store-location/store-location.component";
 import { SalesComponent } from "./components/sales/sales.component";
-
-//SERVICES
-import { BooksService } from "./services/books/books.service";
-import { CategoriesService } from "./services/categories/categories.service";
-import { SalesService } from "./services/sales/sales.service";
-import { UsersService } from "./services/users/users.service";
 import { ExtAppToolbarComponent } from "./components/layout/ext-app-toolbar/ext-app-toolbar.component";
 import { BookCardComponent } from "./components/book-card/book-card.component";
 import { LoginComponent } from "./components/layout/login/login.component";
 import { SignupComponent } from "./components/layout/signup/signup.component";
+import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import {
+  IntBooksComponent,
+  DialogAddEjemplarDialog,
+  DialogEjemplaresDialog
+} from "./components/int-books/int-books.component";
+import { IntCategoriesComponent } from "./components/int-categories/int-categories.component";
+import { IntUsersComponent } from "./components/int-users/int-users.component";
+import { IntSalesComponent } from "./components/int-sales/int-sales.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    ExtNavbarComponent,
-    IntNavbarComponent,
-    IntSidebarComponent,
     ExtAppLayoutComponent,
     IntAppLayoutComponent,
     FooterComponent,
@@ -87,8 +96,16 @@ import { SignupComponent } from "./components/layout/signup/signup.component";
     ExtAppToolbarComponent,
     BookCardComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    DashboardComponent,
+    IntBooksComponent,
+    IntCategoriesComponent,
+    IntUsersComponent,
+    IntSalesComponent,
+    DialogAddEjemplarDialog,
+    DialogEjemplaresDialog
   ],
+  entryComponents: [DialogAddEjemplarDialog, DialogEjemplaresDialog],
   imports: [
     HttpClientModule,
     BrowserModule,
@@ -112,11 +129,33 @@ import { SignupComponent } from "./components/layout/signup/signup.component";
         path: "admin",
         component: IntAppLayoutComponent,
         canActivate: [AuthAdminGuard],
-        canActivateChild: [AuthAdminGuard]
+        canActivateChild: [AuthAdminGuard],
+        children: [
+          {
+            path: "",
+            component: DashboardComponent
+          },
+          {
+            path: "books",
+            component: IntBooksComponent
+          },
+          {
+            path: "categories",
+            component: IntCategoriesComponent
+          },
+          {
+            path: "users",
+            component: IntUsersComponent
+          },
+          {
+            path: "sales",
+            component: IntSalesComponent
+          }
+        ]
       }
     ]),
     ToastrModule.forRoot({
-      timeOut: 2000,
+      timeOut: 3000,
       positionClass: "toast-top-right",
       preventDuplicates: true
     }),
@@ -136,7 +175,13 @@ import { SignupComponent } from "./components/layout/signup/signup.component";
     MatFormFieldModule,
     MatSelectModule,
     MatButtonModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatExpansionModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [
     BooksService,

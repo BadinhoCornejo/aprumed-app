@@ -1,5 +1,8 @@
 @import './src/styles.sass'
 
+button
+    @include clearButton()
+
 .mat-toolbar
     @include ph(6em, 6em)
     position: fixed
@@ -17,53 +20,63 @@
         @include flex(row, center)
         span
             font-family: $generic-font
-            font-size: 30px
+            font-size: 24px
             margin-right: 2em
             align-self: center
             cursor: pointer
             @media screen and ( max-width: $phone ) 
                 display: none
 
-        .mat-form-field
-            align-self: center
-            font-family: $generic-font
-            color: $secundary-color
-            font-size: 16px
-            .icon-placeholder
-                margin-right: 16px
-                cursor: pointer
-    .right-side
-        height: 100%
-        @include flex(row, center)
-        button
-            @include clearButton()
-            align-self: center !important
-            margin-right: 2em
-            font-family: $generic-font
-            font-size: 20px
+.center-side
+    width: 100%
+    @include flex(row, center)
+    .mat-form-field
+        width: 600px
+        align-self: center
+        font-family: $generic-font
+        color: $secundary-color
+        font-size: 16px
+        @media screen and ( max-width: $tablet )
+            width: 350px
+        @media screen and ( max-width: $phone )
+            width: 200px
+        .icon-placeholder
+            margin-right: 16px
+            cursor: pointer
+
+.right-side
+    height: 100%
+    @include flex(row, center)
+    button
+        align-self: center !important
+        margin-right: 2em
+        font-family: $generic-font
+        font-size: 16px
+        @media screen and ( max-width: $phone )
+            margin-right: 16px
+        p
+            margin-bottom: 0px
             @media screen and ( max-width: $phone )
-                margin-right: 0px
-            p
-                margin-bottom: 0px
-                @media screen and ( max-width: $phone )
-                    display: none
-            i
-                font-size: 30px
-                @media screen and ( max-width: $phone )
-                    @include mh(2px, 4px)
+                display: none
+        i
+            font-size: 24px
+            @media screen and ( max-width: $phone )
+                @include mh(2px, 4px)
 .avatar-container
     align-self: center !important
     @include mh(16px, null)
     button
-        @include clearButton()
     .avatar-img
         vertical-align: middle
-        width: 40px
-        height: 40px
+        width: 33px
+        height: 33px
+        margin-bottom: 8px
         border-radius: 50%
         @media screen and ( max-width: $phone )
-            @include mh(16px, 8px)
-::ng-deep .menu-not
+            @include mh(8px, 18px)
+::ng-deep .mat-menu-content
+    @include flex(column, null)
+    overflow: hidden !important
     @media screen and ( max-width: $phone )
         @include mh(null,16px)
     button:focus
@@ -75,3 +88,4 @@
         font-size: 16px
         @include ph(4px, 10px)
         margin-right: 4px
+

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IntNavbarComponent } from './int-navbar.component';
+import { IntBooksComponent } from './int-books.component';
 
-describe('IntNavbarComponent', () => {
-  let component: IntNavbarComponent;
-  let fixture: ComponentFixture<IntNavbarComponent>;
+describe('IntBooksComponent', () => {
+  let component: IntBooksComponent;
+  let fixture: ComponentFixture<IntBooksComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IntNavbarComponent ]
+      declarations: [ IntBooksComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IntNavbarComponent);
+    fixture = TestBed.createComponent(IntBooksComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

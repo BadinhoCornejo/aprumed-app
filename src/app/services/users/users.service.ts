@@ -26,8 +26,8 @@ export class UsersService {
     return this.isAdminLog;
   }
 
-  verificarAcceso(user: any) {
-    let usuario = JSON.stringify(user);
+  verificarAcceso(_usuario: any) {
+    let usuario = JSON.stringify(_usuario);
     let headers = new HttpHeaders().set("Content-Type", "application/json");
     return this.httpClient.post("http://localhost:8080/users/login", usuario, {
       headers: headers
