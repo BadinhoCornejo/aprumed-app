@@ -55,6 +55,16 @@ export class IntBooksComponent implements OnInit {
     this.bookService.listarLibros().subscribe(
       result => {
         this.books = result;
+        this.books.map(book => {
+          this.bookService.getLibroEjemplares(book.libroID).subscribe(
+            result => {
+              book["ejemplares"] = result;
+            },
+            error => {
+              console.error(JSON.stringify(error));
+            }
+          );
+        });
         this.dataSource = new MatTableDataSource<any>(this.books);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -86,10 +96,10 @@ export class IntBooksComponent implements OnInit {
       this.getBooks();
     });
   }
-  openEjemplaresDialog(_id: number, _titulo: string) {
+  openEjemplaresDialog(_ejemplares: any) {
     const dialogRef = this.dialog.open(DialogEjemplaresDialog, {
       width: "550px",
-      data: { libroID: _id, titulo: _titulo }
+      data: { ejemplares: _ejemplares }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
@@ -185,7 +195,6 @@ export class DialogAddEjemplarDialog implements OnInit {
 })
 export class DialogEjemplaresDialog implements OnInit {
   displayedColumns: string[] = ["position", "sku", "estado", "opciones"];
-  libro: any;
   ejemplares: any = [];
   dataSource: MatTableDataSource<any>;
 
@@ -193,11 +202,10 @@ export class DialogEjemplaresDialog implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
-    private booksService: BooksService,
     public dialogRef: MatDialogRef<DialogEjemplaresDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.libro = data;
+    this.ejemplares = data.ejemplares;
   }
 
   ngOnInit() {
@@ -205,17 +213,9 @@ export class DialogEjemplaresDialog implements OnInit {
   }
 
   getEjemplares() {
-    this.booksService.getLibroEjemplares(this.libro.libroID).subscribe(
-      result => {
-        this.ejemplares = result;
-        this.dataSource = new MatTableDataSource<any>(this.ejemplares);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-      error => {
-        console.error(JSON.stringify(error));
-      }
-    );
+    this.dataSource = new MatTableDataSource<any>(this.ejemplares);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   aplicarFiltro(filterValue: string) {

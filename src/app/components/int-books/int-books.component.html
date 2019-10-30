@@ -71,7 +71,12 @@
           >
             Agregar ejemplar
           </button>
-          <button mat-menu-item (click)="openEjemplaresDialog(element.libroID, element.titulo)">Ver ejemplares</button>
+          <button
+            mat-menu-item
+            (click)="openEjemplaresDialog(element.ejemplares)"
+          >
+            Ver ejemplares
+          </button>
           <button mat-menu-item>Editar</button>
           <button mat-menu-item>Inhabilitar</button>
         </mat-menu>
