@@ -25,16 +25,25 @@
     </ng-container>
 
     <ng-container matColumnDef="estado">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
-      <td mat-cell *matCellDef="let element">{{ element.estado }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="opciones">
-      <th mat-header-cell *matHeaderCellDef>Inhabilitar</th>
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-button [matMenuTriggerFor]="menuOpciones">
-          <i class="fa fa-minus-circle" aria-hidden="true"></i>
-        </button>
+        <mat-slide-toggle
+          [color]="color"
+          [checked]="isChecked(element)"
+          (change)="actualizarEjemplar($event, element)"
+          *ngIf="
+            element.estado !== 'Vendido' && element.estado !== 'En Carrito'
+          "
+        >
+        </mat-slide-toggle>
+        <div
+          *ngIf="
+            element.estado === 'Vendido' || element.estado === 'En Carrito'
+          "
+        >
+        <p *ngIf="element.estado === 'Vendido'">Vendido</p>
+        <p *ngIf="element.estado === 'En Carrito'">En Carrito</p>
+      </div>
       </td>
     </ng-container>
 
@@ -47,7 +56,12 @@
     showFirstLastButtons
   ></mat-paginator>
   <div mat-dialog-actions>
-    <button mat-button cdkFocusInitial [mat-dialog-close]="GA">
+    <button
+      mat-button
+      cdkFocusInitial
+      [mat-dialog-close]="GA"
+      (click)="deleteEjemplar()"
+    >
       Guardar
     </button>
     <button mat-button (click)="onNoClick()">Cerrar</button>

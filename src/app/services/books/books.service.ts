@@ -40,4 +40,15 @@ export class BooksService {
       }
     );
   }
+
+  deleteEjemplar(ejemplares: any) {
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.httpClient.put(
+      `http://localhost:8080/books/deleteEjemplar`,
+      ejemplares,
+      {
+        headers: headers
+      }
+    );
+  }
 }

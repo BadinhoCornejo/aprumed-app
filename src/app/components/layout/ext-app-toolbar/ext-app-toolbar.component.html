@@ -42,6 +42,9 @@
         <button mat-menu-item>
           <i class="fa fa-user" aria-hidden="true"></i>Perfil
         </button>
+        <button mat-menu-item [routerLink]="['/admin']" *ngIf="user.tipoUsuario.tipoUsuarioID === 2">
+          <i class="fa fa-tachometer" aria-hidden="true"></i>Ir al dashboard
+        </button>
         <button mat-menu-item (click)="signOut()">
           <i class="fa fa-sign-out" aria-hidden="true"></i>Cerrar sesión
         </button>

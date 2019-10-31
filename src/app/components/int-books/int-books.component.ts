@@ -14,8 +14,11 @@ import {
   FormArray,
   FormBuilder,
   Validators,
-  Form
+  Form,
+  FormControl
 } from "@angular/forms";
+import { FirebaseStorageService } from "../../services/firebase/firebase-storage.service";
+import { CategoriesService } from "src/app/services/categories/categories.service";
 
 @Component({
   selector: "app-int-books",
@@ -80,19 +83,22 @@ export class IntBooksComponent implements OnInit {
   }
 
   openAddEjemplarDialog(_id: number, _titulo: string) {
-    let action = "máquina";
+    let action = "VOLVER";
     const dialogRef = this.dialog.open(DialogAddEjemplarDialog, {
       width: "550px",
       data: { libroID: _id, titulo: _titulo }
     });
     dialogRef.afterClosed().subscribe(result => {
-      result === 1
-        ? this.snackBar.open("Agregaste " + result + " ejemplar!", action, {
-            duration: 2000
-          })
-        : this.snackBar.open("Agregaste " + result + " ejemplares!", action, {
-            duration: 2000
-          });
+      if (result !== undefined) {
+        result === 1
+          ? this.snackBar.open("Agregaste " + result + " ejemplar!", action, {
+              duration: 2000
+            })
+          : this.snackBar.open("Agregaste " + result + " ejemplares!", action, {
+              duration: 2000
+            });
+      }
+
       this.getBooks();
     });
   }
@@ -100,6 +106,17 @@ export class IntBooksComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogEjemplaresDialog, {
       width: "550px",
       data: { ejemplares: _ejemplares }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.getBooks();
+    });
+  }
+
+  openEditLibroDialog(_libro: any) {
+    const dialogRef = this.dialog.open(DialogEditarLibroDialog, {
+      width: "720px",
+      data: { libro: _libro }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
@@ -194,14 +211,18 @@ export class DialogAddEjemplarDialog implements OnInit {
   templateUrl: "dialog-ejemplares-dialog.html"
 })
 export class DialogEjemplaresDialog implements OnInit {
-  displayedColumns: string[] = ["position", "sku", "estado", "opciones"];
+  displayedColumns: string[] = ["position", "sku", "estado"];
+  color = "primary";
   ejemplares: any = [];
+  newEjemplares: any = [];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
+    public bookService: BooksService,
+    private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DialogEjemplaresDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -212,14 +233,186 @@ export class DialogEjemplaresDialog implements OnInit {
     this.getEjemplares();
   }
 
+  isChecked(element: any) {
+    if (element.estado === "Inactivo") {
+      return false;
+    } else if (element.estado === "Activo") {
+      return true;
+    }
+  }
+
   getEjemplares() {
     this.dataSource = new MatTableDataSource<any>(this.ejemplares);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
+  actualizarEjemplar(e, ejemplar: any) {
+    let ejemplaresAux = [];
+
+    if (e.checked) {
+      ejemplar.estado = "Activo";
+    } else {
+      ejemplar.estado = "Inactivo";
+    }
+
+    if (this.newEjemplares.length !== 0) {
+      this.newEjemplares.map(item => {
+        if (item.sku !== ejemplar.sku) {
+          this.newEjemplares.push(ejemplar);
+        }
+      });
+    } else {
+      this.newEjemplares.push(ejemplar);
+    }
+  }
+
+  deleteEjemplar() {
+    this.bookService.deleteEjemplar(this.newEjemplares).subscribe(
+      result => {
+        this.snackBar.open("Ejemplares actualizados!", "VOLVER", {
+          duration: 2000
+        });
+      },
+      error => {
+        this.snackBar.open("Ups! Algo salió mal", "VOLVER", {
+          duration: 2000
+        });
+      }
+    );
+  }
+
   aplicarFiltro(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+//Modal para editar libro
+@Component({
+  selector: "dialog-editar-libro-dialog",
+  templateUrl: "dialog-editar-libro-dialog.html"
+})
+export class DialogEditarLibroDialog implements OnInit {
+  form: FormGroup;
+  submitted = false;
+  libro: any;
+  categorias: any = [];
+  color = "primary";
+
+  public archivoForm = new FormGroup({
+    archivo: new FormControl(null, Validators.required)
+  });
+
+  public mensajeArchivo = "No hay un archivo seleccionado";
+  public datosFormulario = new FormData();
+  public nombreArchivo = "";
+  public URLPublica = "";
+  public porcentaje = 0;
+  public finalizado = false;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private booksService: BooksService,
+    private firebaseStorage: FirebaseStorageService,
+    private categoriesService: CategoriesService,
+    public dialogRef: MatDialogRef<DialogEditarLibroDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.getCategories();
+    this.libro = data.libro;
+    this.form = this.formBuilder.group({
+      titulo: [this.libro.titulo, Validators.required],
+      autor: [this.libro.autor, Validators.required],
+      fechaPublicacion: [
+        this.libro.fechaPublicacion,
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(`(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
+      `)
+        ])
+      ],
+      isbn: [this.libro.isbn, Validators.required],
+      precio: [
+        this.libro.precio,
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(`[0-9]+(\\.[0-9][0-9]?)?
+    `)
+        ])
+      ]
+    });
+  }
+
+  ngOnInit() {}
+
+  get f() {
+    return this.form.controls;
+  }
+
+  isChecked() {
+    if (this.libro.estado === "Inactivo") {
+      return false;
+    } else if (this.libro.estado === "Activo") {
+      return true;
+    }
+  }
+
+  getCategories() {
+    this.categoriesService.listCategories().subscribe(
+      result => {
+        this.categorias = result;
+      },
+      error => {
+        console.error(JSON.stringify(error));
+      }
+    );
+  }
+
+  public cambioArchivo(event) {
+    if (event.target.files.length > 0) {
+      for (let i = 0; i < event.target.files.length; i++) {
+        this.mensajeArchivo = `Archivo preparado: ${event.target.files[i].name}`;
+        this.nombreArchivo = event.target.files[i].name;
+        this.datosFormulario.delete("archivo");
+        this.datosFormulario.append(
+          "archivo",
+          event.target.files[i],
+          event.target.files[i].name
+        );
+      }
+    } else {
+      this.mensajeArchivo = "No hay un archivo seleccionado";
+    }
+  }
+
+  public subirArchivo() {
+    let archivo = this.datosFormulario.get("archivo");
+    let referencia = this.firebaseStorage.refPortada(this.nombreArchivo);
+    let tarea = this.firebaseStorage.uploadPortada(this.nombreArchivo, archivo);
+
+    //Cambia el porcentaje
+    tarea.percentageChanges().subscribe(porcentaje => {
+      this.porcentaje = Math.round(porcentaje);
+      if (this.porcentaje == 100) {
+        this.finalizado = true;
+      }
+    });
+
+    referencia.getDownloadURL().subscribe(URL => {
+      this.URLPublica = URL;
+    });
+  }
+
+  onSubmit(): void {
+    this.submitted = true;
+
+    if (this.form.invalid) {
+      return;
+    }
   }
 
   onNoClick(): void {

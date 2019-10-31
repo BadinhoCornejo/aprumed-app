@@ -37,8 +37,14 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
+//Firebase 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { environment } from '../environments/environment';
 
 //AUTHS
 import { AuthAdminGuard } from "./auth-admin.guard";
@@ -72,7 +78,8 @@ import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import {
   IntBooksComponent,
   DialogAddEjemplarDialog,
-  DialogEjemplaresDialog
+  DialogEjemplaresDialog,
+  DialogEditarLibroDialog
 } from "./components/int-books/int-books.component";
 import { IntCategoriesComponent } from "./components/int-categories/int-categories.component";
 import { IntUsersComponent } from "./components/int-users/int-users.component";
@@ -103,9 +110,14 @@ import { IntSalesComponent } from "./components/int-sales/int-sales.component";
     IntUsersComponent,
     IntSalesComponent,
     DialogAddEjemplarDialog,
-    DialogEjemplaresDialog
+    DialogEjemplaresDialog,
+    DialogEditarLibroDialog
   ],
-  entryComponents: [DialogAddEjemplarDialog, DialogEjemplaresDialog],
+  entryComponents: [
+    DialogAddEjemplarDialog,
+    DialogEjemplaresDialog,
+    DialogEditarLibroDialog
+  ],
   imports: [
     HttpClientModule,
     BrowserModule,
@@ -181,7 +193,10 @@ import { IntSalesComponent } from "./components/int-sales/int-sales.component";
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSlideToggleModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule
   ],
   providers: [
     BooksService,
