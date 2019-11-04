@@ -114,12 +114,13 @@ export class IntBooksComponent implements OnInit {
   }
 
   openEditLibroDialog(_libro: any) {
+    
     const dialogRef = this.dialog.open(DialogEditarLibroDialog, {
       width: "720px",
       data: { libro: _libro }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      
       this.getBooks();
     });
   }
@@ -299,7 +300,35 @@ export class DialogEjemplaresDialog implements OnInit {
 export class DialogEditarLibroDialog implements OnInit {
   form: FormGroup;
   submitted = false;
-  libro: any;
+  libro: any = {
+    libroID: "",
+    autor: "",
+    fechaPublicacion: "",
+    isbn: "",
+    precio: "",
+    stock: "",
+    titulo: "",
+    categoria: {
+      categoriaID: ""
+    },
+    estado: "",
+    portada: {
+      url: "",
+      portadaID: "",
+      estado: "",
+      nombrePortada: ""
+    }
+  };
+  portada: any = {
+    url: "",
+    portadaID: "",
+    estado: "",
+    nombrePortada: ""
+  };
+  categoria: any = {
+    categoriaID: ""
+  };
+  portadaID: any;
   categorias: any = [];
   color = "primary";
 
@@ -307,14 +336,21 @@ export class DialogEditarLibroDialog implements OnInit {
     archivo: new FormControl(null, Validators.required)
   });
 
-  public mensajeArchivo = "No hay un archivo seleccionado";
-  public datosFormulario = new FormData();
-  public nombreArchivo = "";
-  public URLPublica = "";
-  public porcentaje = 0;
-  public finalizado = false;
+  mensajeArchivo = "No hay un archivo seleccionado";
+  datosFormulario = new FormData();
+  nombreArchivo = "";
+  URLPublica = "";
+  finalizado = false;
+  showPreview = false;
+
+  //PROGRESS
+  porcentaje = 0;
+  mode = "indeterminate";
+  isProgress = false;
+  diameter = "40";
 
   constructor(
+    private snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
     private booksService: BooksService,
     private firebaseStorage: FirebaseStorageService,
@@ -331,8 +367,9 @@ export class DialogEditarLibroDialog implements OnInit {
         this.libro.fechaPublicacion,
         Validators.compose([
           Validators.required,
-          Validators.pattern(`(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
-      `)
+          Validators.pattern(
+            `(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))`
+          )
         ])
       ],
       isbn: [this.libro.isbn, Validators.required],
@@ -340,10 +377,10 @@ export class DialogEditarLibroDialog implements OnInit {
         this.libro.precio,
         Validators.compose([
           Validators.required,
-          Validators.pattern(`[0-9]+(\\.[0-9][0-9]?)?
-    `)
+          Validators.pattern(`[0-9]+(\\.[0-9][0-9]?)?`)
         ])
-      ]
+      ],
+      categoriaID: ["", Validators.required]
     });
   }
 
@@ -372,7 +409,7 @@ export class DialogEditarLibroDialog implements OnInit {
     );
   }
 
-  public cambioArchivo(event) {
+  cambioArchivo(event) {
     if (event.target.files.length > 0) {
       for (let i = 0; i < event.target.files.length; i++) {
         this.mensajeArchivo = `Archivo preparado: ${event.target.files[i].name}`;
@@ -389,22 +426,58 @@ export class DialogEditarLibroDialog implements OnInit {
     }
   }
 
-  public subirArchivo() {
+  subirArchivo() {
     let archivo = this.datosFormulario.get("archivo");
-    let referencia = this.firebaseStorage.refPortada(this.nombreArchivo);
-    let tarea = this.firebaseStorage.uploadPortada(this.nombreArchivo, archivo);
 
-    //Cambia el porcentaje
-    tarea.percentageChanges().subscribe(porcentaje => {
-      this.porcentaje = Math.round(porcentaje);
-      if (this.porcentaje == 100) {
-        this.finalizado = true;
-      }
-    });
+    let referencia = this.firebaseStorage.refPortada(this.nombreArchivo);
+
+    let verifyFile;
 
     referencia.getDownloadURL().subscribe(URL => {
-      this.URLPublica = URL;
+      verifyFile = URL;
     });
+
+    if (verifyFile !== null) {
+      let tarea = this.firebaseStorage.uploadPortada(
+        this.nombreArchivo,
+        archivo
+      );
+
+      //Cambia el porcentaje
+      tarea.percentageChanges().subscribe(porcentaje => {
+        this.isProgress = true;
+        this.porcentaje = Math.round(porcentaje);
+        if (this.porcentaje == 100) {
+          this.finalizado = true;
+          this.isProgress = false;
+        }
+      });
+    } else {
+      this.finalizado = true;
+    }
+  }
+
+  setShowPreview() {
+    let referencia = this.firebaseStorage.refPortada(this.nombreArchivo);
+
+    const sub = referencia.getDownloadURL().subscribe(
+      URL => {
+        this.URLPublica = URL;
+      },
+      error => {
+        console.error(JSON.stringify(error));
+      }
+    );
+
+    this.showPreview = !this.showPreview;
+  }
+
+  actualizarLibro(e) {
+    if (e.checked) {
+      this.libro.estado = "Activo";
+    } else {
+      this.libro.estado = "Inactivo";
+    }
   }
 
   onSubmit(): void {
@@ -413,6 +486,51 @@ export class DialogEditarLibroDialog implements OnInit {
     if (this.form.invalid) {
       return;
     }
+
+    this.portada["url"] = this.URLPublica;
+    this.categoria["categoriaID"] = this.form.value.categoriaID;
+    this.libro.autor = this.form.value.autor;
+    this.libro.fechaPublicacion = this.form.value.fechaPublicacion;
+    this.libro.isbn = this.form.value.isbn;
+    this.libro.precio = this.form.value.precio;
+    this.libro.titulo = this.form.value.titulo;
+
+    delete this.libro.categoriaID;
+    this.libro.categoria = this.categoria;
+
+    this.portada["nombrePortada"] = this.nombreArchivo;
+    this.portada["estado"] = "Activo";
+    this.booksService.addPortada(this.portada).subscribe(
+      result => {
+        console.log(result);
+      },
+
+      error => {
+        console.error(JSON.stringify(error));
+      }
+    );
+
+    this.booksService.findPortadaByName(this.portada).subscribe(
+      result => {
+        this.libro.portada = result;
+
+        this.booksService.editLibro(this.libro).subscribe(
+          result => {
+            let action = "VOLVER";
+            this.dialogRef.close();
+            this.snackBar.open("Libro editado!", action, {
+              duration: 2000
+            });
+          },
+          error => {
+            console.error(JSON.stringify(error));
+          }
+        );
+      },
+      error => {
+        console.error(JSON.stringify(error));
+      }
+    );
   }
 
   onNoClick(): void {

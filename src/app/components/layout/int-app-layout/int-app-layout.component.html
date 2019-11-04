@@ -67,7 +67,9 @@
               >
             </mat-list-item>
             <mat-list-item>
-              <a href="#" (click)="sidenav.toggle()">Nuevo libro</a>
+              <a [routerLink]="['newBook']" (click)="sidenav.toggle()"
+                >Nuevo libro</a
+              >
             </mat-list-item>
           </mat-nav-list>
         </mat-expansion-panel>
@@ -86,9 +88,6 @@
               <a [routerLink]="['categories']" (click)="sidenav.toggle()"
                 >Ver categorias</a
               >
-            </mat-list-item>
-            <mat-list-item>
-              <a href="#" (click)="sidenav.toggle()">Nueva categoria</a>
             </mat-list-item>
           </mat-nav-list>
         </mat-expansion-panel>
@@ -109,7 +108,7 @@
               >
             </mat-list-item>
             <mat-list-item>
-              <a href="#" (click)="sidenav.toggle()">Nuevo usuario</a>
+              <a [routerLink]="['newUser']" (click)="sidenav.toggle()">Nuevo usuario</a>
             </mat-list-item>
           </mat-nav-list>
         </mat-expansion-panel>

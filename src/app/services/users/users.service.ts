@@ -33,4 +33,58 @@ export class UsersService {
       headers: headers
     });
   }
+
+  getUsers() {
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+    return this.httpClient.get("http://localhost:8080/users/", {
+      headers: headers
+    });
+  }
+
+  getTiposUsuario() {
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+    return this.httpClient.get("http://localhost:8080/users/tiposUsuario", {
+      headers: headers
+    });
+  }
+
+  addUser(usuario: any) {
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.httpClient.post("http://localhost:8080/users/new", usuario, {
+      headers: headers
+    });
+  }
+
+  editUser(usuario: any) {
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.httpClient.put("http://localhost:8080/users/edit", usuario, {
+      headers: headers
+    });
+  }
+
+  findAvatarByName(avatar: any) {
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.httpClient.post(
+      "http://localhost:8080/users/buscarAvatar",
+      avatar,
+      {
+        headers: headers
+      }
+    );
+  }
+
+  addAvatar(avatar: any) {
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.httpClient.post(
+      "http://localhost:8080/users/addAvatar",
+      avatar,
+      {
+        headers: headers
+      }
+    );
+  }
 }

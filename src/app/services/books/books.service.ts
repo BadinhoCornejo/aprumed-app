@@ -31,6 +31,30 @@ export class BooksService {
     );
   }
 
+  addLibro(libro: any) {
+
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.httpClient.post(
+      "http://localhost:8080/books/new",
+      libro,
+      {
+        headers: headers
+      }
+    );
+  }
+
+  editLibro(libro: any) {
+
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.httpClient.put(
+      "http://localhost:8080/books/edit",
+      libro,
+      {
+        headers: headers
+      }
+    );
+  }
+
   getLibroEjemplares(libroID: number) {
     let headers = new HttpHeaders().set("Content-Type", "application/json");
     return this.httpClient.get(
@@ -46,6 +70,28 @@ export class BooksService {
     return this.httpClient.put(
       `http://localhost:8080/books/deleteEjemplar`,
       ejemplares,
+      {
+        headers: headers
+      }
+    );
+  }
+
+  findPortadaByName(portada: any){
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.httpClient.post(
+      "http://localhost:8080/books/buscarPortada",
+      portada,
+      {
+        headers: headers
+      }
+    );
+  }
+
+  addPortada(portada: any){
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.httpClient.post(
+      "http://localhost:8080/books/addPortada",
+      portada,
       {
         headers: headers
       }

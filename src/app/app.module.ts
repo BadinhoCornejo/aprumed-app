@@ -41,10 +41,10 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-//Firebase 
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { environment } from '../environments/environment';
+//Firebase
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireStorageModule } from "@angular/fire/storage";
+import { environment } from "../environments/environment";
 
 //AUTHS
 import { AuthAdminGuard } from "./auth-admin.guard";
@@ -81,9 +81,18 @@ import {
   DialogEjemplaresDialog,
   DialogEditarLibroDialog
 } from "./components/int-books/int-books.component";
-import { IntCategoriesComponent } from "./components/int-categories/int-categories.component";
-import { IntUsersComponent } from "./components/int-users/int-users.component";
+import {
+  IntCategoriesComponent,
+  DialogEditCategorieDialog,
+  DialogNewCategorieDialog
+} from "./components/int-categories/int-categories.component";
+import {
+  IntUsersComponent,
+  DialogEditarUsuarioDialog
+} from "./components/int-users/int-users.component";
 import { IntSalesComponent } from "./components/int-sales/int-sales.component";
+import { IntNewbookComponent } from "./components/int-newbook/int-newbook.component";
+import { IntNewuserComponent } from './components/int-newuser/int-newuser.component';
 
 @NgModule({
   declarations: [
@@ -107,16 +116,24 @@ import { IntSalesComponent } from "./components/int-sales/int-sales.component";
     DashboardComponent,
     IntBooksComponent,
     IntCategoriesComponent,
+    DialogEditCategorieDialog,
+    DialogNewCategorieDialog,
     IntUsersComponent,
+    DialogEditarUsuarioDialog,
     IntSalesComponent,
     DialogAddEjemplarDialog,
     DialogEjemplaresDialog,
-    DialogEditarLibroDialog
+    DialogEditarLibroDialog,
+    IntNewbookComponent,
+    IntNewuserComponent
   ],
   entryComponents: [
     DialogAddEjemplarDialog,
     DialogEjemplaresDialog,
-    DialogEditarLibroDialog
+    DialogEditarLibroDialog,
+    DialogEditCategorieDialog,
+    DialogNewCategorieDialog,
+    DialogEditarUsuarioDialog
   ],
   imports: [
     HttpClientModule,
@@ -152,12 +169,20 @@ import { IntSalesComponent } from "./components/int-sales/int-sales.component";
             component: IntBooksComponent
           },
           {
+            path: "newBook",
+            component: IntNewbookComponent
+          },
+          {
             path: "categories",
             component: IntCategoriesComponent
           },
           {
             path: "users",
             component: IntUsersComponent
+          },
+          {
+            path: "newUser",
+            component: IntNewuserComponent
           },
           {
             path: "sales",

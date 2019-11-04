@@ -1,61 +1,8 @@
-<style>
-  .invalid-feedback {
-    display: block;
-  }
-  .contenedor {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .download {
-    color: #000000;
-    padding: 10px 20px;
-    margin-bottom: 20px;
-  }
-  a {
-    text-decoration: underline;
-    color: #000000;
-  }
-  a[type="button"] {
-    all: unset;
-    cursor: pointer;
-    margin-left: 16px;
-    font-family: "Noto Sans", sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-  }
-
-  input[type="file" i] {
-    background-color: white !important;
-    border: 0px !important;
-  }
-
-  .portrait {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 16px;
-  }
-  .portrait img {
-    height: 224px;
-    width: 224px;
-    align-self: center;
-  }
-  .progressContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 16px;
-    margin-bottom: 16px;
-  }
-</style>
-<h1 mat-dialog-title>Editar: {{ libro.titulo }}</h1>
 <div style="display: flex; flex-direction: row;">
-  <div style="width: 70%;">
+  <div class="new-book-container">
+    <h2>Agregar un nuevo libro</h2>
     <form [formGroup]="form">
-      <div mat-dialog-content>
+      <div>
         <mat-form-field style="width: 100%;">
           <mat-label>Titulo</mat-label>
           <input
@@ -150,16 +97,8 @@
             >
           </mat-select>
         </mat-form-field>
-        <mat-slide-toggle
-          [color]="color"
-          [checked]="isChecked()"
-          (change)="actualizarLibro($event)"
-          style="margin-left: 32px;"
-        >
-          Activo
-        </mat-slide-toggle>
       </div>
-      <div mat-dialog-actions>
+      <div>
         <button mat-button type="submit" cdkFocusInitial (click)="onSubmit()">
           Guardar
         </button>

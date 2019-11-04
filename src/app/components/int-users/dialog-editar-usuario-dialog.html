@@ -51,109 +51,138 @@
     margin-bottom: 16px;
   }
 </style>
-<h1 mat-dialog-title>Editar: {{ libro.titulo }}</h1>
+<h1 mat-dialog-title>Editar: {{ usuario.nombre }}</h1>
 <div style="display: flex; flex-direction: row;">
   <div style="width: 70%;">
     <form [formGroup]="form">
       <div mat-dialog-content>
         <mat-form-field style="width: 100%;">
-          <mat-label>Titulo</mat-label>
+          <mat-label>Nombre(s)</mat-label>
           <input
             matInput
             type="text"
-            formControlName="titulo"
-            placeholder="Ingrese el título"
-            [ngClass]="{ 'is-invalid': submitted && f.titulo.errors }"
+            formControlName="nombre"
+            placeholder="Ingrese su nombre"
+            [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }"
           />
-          <div *ngIf="submitted && f.titulo.errors" class="invalid-feedback">
-            <div *ngIf="f.titulo.errors.required">
+          <div *ngIf="submitted && f.nombre.errors" class="invalid-feedback">
+            <div *ngIf="f.nombre.errors.required">
               Este campo es requerido
             </div>
           </div>
         </mat-form-field>
         <mat-form-field style="width: 100%;">
-          <mat-label>Autor</mat-label>
+          <mat-label>Apellidos</mat-label>
           <input
             matInput
             type="text"
-            formControlName="autor"
-            placeholder="Ingrese el autor"
-            [ngClass]="{ 'is-invalid': submitted && f.autor.errors }"
+            formControlName="apellido"
+            placeholder="Ingrese sus apellidos"
+            [ngClass]="{ 'is-invalid': submitted && f.apellido.errors }"
           />
-          <div *ngIf="submitted && f.autor.errors" class="invalid-feedback">
-            <div *ngIf="f.autor.errors.required">
+          <div *ngIf="submitted && f.apellido.errors" class="invalid-feedback">
+            <div *ngIf="f.apellido.errors.required">
               Este campo es requerido
             </div>
           </div>
         </mat-form-field>
+
         <mat-form-field style="width: 100%;">
-          <mat-label>Fecha de publicación</mat-label>
+          <mat-label>Teléfono</mat-label>
           <input
             matInput
             type="text"
-            formControlName="fechaPublicacion"
-            placeholder="Ingrese la fecha de publicación"
-            [ngClass]="{ 'is-invalid': submitted && f.fechaPublicacion.errors }"
+            formControlName="telefono"
+            placeholder="Ingrese su número de teléfono"
+            [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }"
           />
-          <div
-            *ngIf="submitted && f.fechaPublicacion.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="f.fechaPublicacion.errors.required">
+          <div *ngIf="submitted && f.telefono.errors" class="invalid-feedback">
+            <div *ngIf="f.telefono.errors.required">
               Este campo es requerido
-            </div>
-            <div *ngIf="f.fechaPublicacion.errors.pattern">
-              Por favor siga el patrón (YYYY-MM-AA)
-            </div>
-          </div>
-        </mat-form-field>
-        <mat-form-field style="width: 100%;">
-          <mat-label>ISBN</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="isbn"
-            placeholder="Ingrese el ISBN"
-            [ngClass]="{ 'is-invalid': submitted && f.isbn.errors }"
-          />
-          <div *ngIf="submitted && f.isbn.errors" class="invalid-feedback">
-            <div *ngIf="f.isbn.errors.required">
-              Este campo es requerido
-            </div>
-          </div>
-        </mat-form-field>
-        <mat-form-field style="width: 100%;">
-          <mat-label>Precio</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="precio"
-            placeholder="Ingrese el precio"
-            [ngClass]="{ 'is-invalid': submitted && f.precio.errors }"
-          />
-          <div *ngIf="submitted && f.precio.errors" class="invalid-feedback">
-            <div *ngIf="f.precio.errors.required">
-              Este campo es requerido
-            </div>
-            <div *ngIf="f.precio.errors.pattern">
-              Por favor ingrese un precio válido
             </div>
           </div>
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Categoria</mat-label>
-          <mat-select formControlName="categoriaID">
+          <mat-label>Tipo de usuario</mat-label>
+          <mat-select formControlName="tipoUsuarioID">
             <mat-option
-              *ngFor="let categoria of categorias"
-              [value]="categoria.categoriaID"
-              >{{ categoria.nombreCategoria }}</mat-option
+              *ngFor="let tipoUsuario of tiposUsuario"
+              [value]="tipoUsuario.tipoUsuarioID"
+              >{{ tipoUsuario.nombreTipoUsuario }}</mat-option
             >
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="width: 100%;">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="email"
+            placeholder="Ingrese el email"
+            [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+          />
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">
+              Este campo es requerido
+            </div>
+            <div *ngIf="f.precio.errors.email">
+              Por favor ingrese un email válido
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field style="width: 100%;">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="usrPassword"
+            [ngClass]="{ 'is-invalid': submitted && f.usrPassword.errors }"
+            placeholder="Ingrese su contraseña"
+          />
+          <div
+            *ngIf="submitted && f.usrPassword.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.usrPassword.errors.required">
+              Este campo es requerido
+            </div>
+            <div *ngIf="f.usrPassword.errors.minlength">
+              La contraseña debe contener al menos 6 caracteres
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field style="width: 100%;">
+          <mat-label>Confirmar contraseña</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="confirmPassword"
+            [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"
+          />
+          <div
+            *ngIf="submitted && f.confirmPassword.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.confirmPassword.errors.required">
+              Por favor confirme la contraseña
+            </div>
+            <div *ngIf="f.confirmPassword.errors.mustMatch">
+              Las contraseñas deben coincidir
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sexo</mat-label>
+          <mat-select formControlName="sexo">
+            <mat-option *ngFor="let item of sexos" [value]="item">{{
+              item
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-slide-toggle
           [color]="color"
           [checked]="isChecked()"
-          (change)="actualizarLibro($event)"
+          (change)="actualizarUsuario($event)"
           style="margin-left: 32px;"
         >
           Activo
