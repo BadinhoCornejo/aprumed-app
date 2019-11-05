@@ -12,19 +12,15 @@
   </div>
   <span fxFlex></span>
   <div class="right-side">
-    <button [matMenuTriggerFor]="menuNotifications">
+    <button *ngIf="user !== null">
       <i
-        matBadge="9"
+        [matBadge]="items"
         matBadgeColor="warn"
         matBadgeSize="medium"
         class="fa fa-cart-arrow-down"
         aria-hidden="true"
       ></i>
     </button>
-    <mat-menu #menuNotifications="matMenu" xPosition="before" class="menu-not">
-      <button mat-menu-item>Item 1</button>
-      <button mat-menu-item>Item 2</button>
-    </mat-menu>
     <button [routerLink]="['/login']" *ngIf="user === null">
       <p>Iniciar sesión</p>
     </button>
@@ -42,7 +38,11 @@
         <button mat-menu-item>
           <i class="fa fa-user" aria-hidden="true"></i>Perfil
         </button>
-        <button mat-menu-item [routerLink]="['/admin']" *ngIf="user.tipoUsuario.tipoUsuarioID === 2">
+        <button
+          mat-menu-item
+          [routerLink]="['/admin']"
+          *ngIf="user.tipoUsuario.tipoUsuarioID === 2"
+        >
           <i class="fa fa-tachometer" aria-hidden="true"></i>Ir al dashboard
         </button>
         <button mat-menu-item (click)="signOut()">

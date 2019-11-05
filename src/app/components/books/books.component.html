@@ -5,8 +5,8 @@
       [rowHeight]="rowHeight"
       (window:resize)="onResize($event)"
     >
-      <mat-grid-tile *ngFor="let libro of libros">
-        <app-book-card [libro]="libro"></app-book-card>
+      <mat-grid-tile *ngFor="let ejemplar of ejemplares">
+        <app-book-card [ejemplar]="ejemplar"></app-book-card>
       </mat-grid-tile>
     </mat-grid-list>
   </div>

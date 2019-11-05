@@ -7,7 +7,7 @@ import { BooksService } from "../../services/books/books.service";
   styleUrls: ["./books.component.sass"]
 })
 export class BooksComponent implements OnInit {
-  libros: any = [];
+  ejemplares: any = [];
 
   breakpoint: number;
   rowHeight: string;
@@ -24,13 +24,13 @@ export class BooksComponent implements OnInit {
     }
 
     this.rowHeight = window.innerWidth <= 900 ? "1:1.2" : "1:1.5";
-    this.listBooks();
+    this.listBooks(0);
   }
 
-  listBooks() {
-    this.booksService.listarLibros().subscribe(
+  listBooks(i: number) {
+    this.booksService.listarEjemplares(i).subscribe(
       result => {
-        this.libros = result;
+        this.ejemplares = result;
       },
       error => {
         console.error(JSON.stringify(error));

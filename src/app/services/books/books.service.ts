@@ -8,6 +8,16 @@ import { Observable } from "rxjs";
 export class BooksService {
   constructor(private httpClient: HttpClient) {}
 
+  listarEjemplares(i: number){
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    return this.httpClient.get(`http://localhost:8080/books/mainEjemplares/${i}`, {
+      headers: headers
+    });
+  }
+
   listarLibros() {
     const headers = new HttpHeaders({
       "Content-Type": "application/json"
