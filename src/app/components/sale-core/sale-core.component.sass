@@ -1,0 +1,29 @@
+@import './src/styles.sass'
+
+.sale-core-container
+    @include flex(row, space-around)
+    @media screen and ( max-width: $phone ) 
+        @include flex(column, center)
+    .store-location-container
+        @inlude flex(column, center)
+        width: 30%
+        .recep
+            font-family: $generic-font
+            font-weight: 100
+            h2
+                font-size: 20px
+    .sale-detail-container
+        @include flex(column, center)
+        width: 70%
+        @include mh(22px, 22px)
+        .pay
+            width: 100%
+            @include flex(column, null)
+            span
+                font-family: $generic-font
+                font-size: 16px
+                font-weight: 100
+                align-self: flex-end
+                @include mv(16px, 16px)
+            button
+                align-self: flex-end

@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
+import { headers } from "../../../headers.js";
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -8,21 +9,34 @@ import { Observable } from "rxjs";
 export class BooksService {
   constructor(private httpClient: HttpClient) {}
 
-  listarEjemplares(i: number){
-    const headers = new HttpHeaders({
-      "Content-Type": "application/json"
-    });
+  listarEjemplares(i: number) {
+    return this.httpClient.get(
+      `http://localhost:8080/books/mainEjemplares/${i}`,
+      {
+        headers: headers
+      }
+    );
+  }
 
-    return this.httpClient.get(`http://localhost:8080/books/mainEjemplares/${i}`, {
-      headers: headers
-    });
+  searchLibros(parameter: String) {
+    return this.httpClient.get(
+      `http://localhost:8080/books/searchEjemplar/${parameter}`,
+      {
+        headers: headers
+      }
+    );
+  }
+
+  verLibro(libroID: number) {
+    return this.httpClient.get(
+      `http://localhost:8080/books/verLibro/${libroID}`,
+      {
+        headers: headers
+      }
+    );
   }
 
   listarLibros() {
-    const headers = new HttpHeaders({
-      "Content-Type": "application/json"
-    });
-
     return this.httpClient.get("http://localhost:8080/books/", {
       headers: headers
     });
@@ -31,7 +45,6 @@ export class BooksService {
   agregarEjemplares(_ejemplares: any) {
     let ejemplares = JSON.stringify(_ejemplares);
 
-    let headers = new HttpHeaders().set("Content-Type", "application/json");
     return this.httpClient.post(
       "http://localhost:8080/books/addEjemplares",
       ejemplares,
@@ -42,31 +55,18 @@ export class BooksService {
   }
 
   addLibro(libro: any) {
-
-    let headers = new HttpHeaders().set("Content-Type", "application/json");
-    return this.httpClient.post(
-      "http://localhost:8080/books/new",
-      libro,
-      {
-        headers: headers
-      }
-    );
+    return this.httpClient.post("http://localhost:8080/books/new", libro, {
+      headers: headers
+    });
   }
 
   editLibro(libro: any) {
-
-    let headers = new HttpHeaders().set("Content-Type", "application/json");
-    return this.httpClient.put(
-      "http://localhost:8080/books/edit",
-      libro,
-      {
-        headers: headers
-      }
-    );
+    return this.httpClient.put("http://localhost:8080/books/edit", libro, {
+      headers: headers
+    });
   }
 
   getLibroEjemplares(libroID: number) {
-    let headers = new HttpHeaders().set("Content-Type", "application/json");
     return this.httpClient.get(
       `http://localhost:8080/books/ejemplaresLibro/${libroID}`,
       {
@@ -76,7 +76,6 @@ export class BooksService {
   }
 
   deleteEjemplar(ejemplares: any) {
-    let headers = new HttpHeaders().set("Content-Type", "application/json");
     return this.httpClient.put(
       `http://localhost:8080/books/deleteEjemplar`,
       ejemplares,
@@ -86,8 +85,7 @@ export class BooksService {
     );
   }
 
-  findPortadaByName(portada: any){
-    let headers = new HttpHeaders().set("Content-Type", "application/json");
+  findPortadaByName(portada: any) {
     return this.httpClient.post(
       "http://localhost:8080/books/buscarPortada",
       portada,
@@ -97,8 +95,7 @@ export class BooksService {
     );
   }
 
-  addPortada(portada: any){
-    let headers = new HttpHeaders().set("Content-Type", "application/json");
+  addPortada(portada: any) {
     return this.httpClient.post(
       "http://localhost:8080/books/addPortada",
       portada,

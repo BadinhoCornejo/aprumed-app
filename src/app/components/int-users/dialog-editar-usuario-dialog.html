@@ -27,9 +27,27 @@
     font-weight: 500;
   }
 
-  input[type="file" i] {
-    background-color: white !important;
-    border: 0px !important;
+  input[type="file"] {
+    margin-top: 4px;
+    -webkit-appearance: textfield;
+  }
+  input[type="file"]::-webkit-file-upload-button {
+    -webkit-appearance: textarea;
+    border: none;
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: none;
+    width: 0;
+  }
+  x::-webkit-file-upload-button,
+  input[type="file"]:after {
+    content: "Browse...";
+    display: inline-block;
+    left: 100%;
+    margin-left: 3px;
+    padding: 3px 8px 2px;
+    position: relative;
+    -webkit-appearance: button;
   }
 
   .portrait {
@@ -233,20 +251,7 @@
               [color]="color"
             ></mat-progress-spinner>
           </div>
-          <button
-            mat-button
-            [ngClass]="{
-              button: true,
-              'is-success': true,
-              'is-large': true,
-              'is-loading': porcentaje > 0 && porcentaje < 100
-            }"
-            [disabled]="
-              !archivoForm.valid && (porcentaje > 0 && porcentaje < 100)
-            "
-          >
-            Subir archivo
-          </button>
+    
           <a type="button" *ngIf="finalizado" (click)="setShowPreview()">
             <i class="fa fa-eye" aria-hidden="true"></i>
             Vista previa

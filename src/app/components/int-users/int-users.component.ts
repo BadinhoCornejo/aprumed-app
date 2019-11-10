@@ -196,6 +196,8 @@ export class DialogEditarUsuarioDialog implements OnInit {
           event.target.files[i].name
         );
       }
+
+      this.subirArchivo();
     } else {
       this.mensajeArchivo = "No hay un archivo seleccionado";
     }
@@ -230,9 +232,16 @@ export class DialogEditarUsuarioDialog implements OnInit {
     } else {
       this.finalizado = true;
     }
+
+    this.addAvatar();
   }
 
   setShowPreview() {
+    this.getReference();
+    this.showPreview = !this.showPreview;
+  }
+
+  getReference() {
     let referencia = this.firebaseStorage.refAvatar(this.nombreArchivo);
 
     const sub = referencia.getDownloadURL().subscribe(
@@ -243,8 +252,6 @@ export class DialogEditarUsuarioDialog implements OnInit {
         console.error(JSON.stringify(error));
       }
     );
-
-    this.showPreview = !this.showPreview;
   }
 
   actualizarUsuario(e) {
@@ -253,6 +260,21 @@ export class DialogEditarUsuarioDialog implements OnInit {
     } else {
       this.usuario.estado = "Inactivo";
     }
+  }
+
+  addAvatar() {
+    this.avatar.url = this.URLPublica;
+    this.avatar.nombreAvatar = this.nombreArchivo;
+    this.avatar.estado = "Activo";
+    this.userService.addAvatar(this.avatar).subscribe(
+      result => {
+        console.log(result);
+      },
+
+      error => {
+        console.error(JSON.stringify(error));
+      }
+    );
   }
 
   onSubmit(): void {
@@ -270,18 +292,7 @@ export class DialogEditarUsuarioDialog implements OnInit {
     this.usuario.telefono = this.form.value.telefono;
     this.usuario.tipoUsuario.tipoUsuarioID = this.form.value.tipoUsuarioID;
 
-    this.avatar.url = this.URLPublica;
-    this.avatar.nombreAvatar = this.nombreArchivo;
-    this.avatar.estado = "Activo";
-    this.userService.addAvatar(this.avatar).subscribe(
-      result => {
-        console.log(result);
-      },
-
-      error => {
-        console.error(JSON.stringify(error));
-      }
-    );
+    this.addAvatar();
 
     this.userService.findAvatarByName(this.avatar).subscribe(
       result => {

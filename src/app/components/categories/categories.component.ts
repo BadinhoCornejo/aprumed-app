@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { CategoriesService } from "../../services/categories/categories.service";
+import { BooksContextService } from "../../services/books-context.service";
+import { BooksService } from "../../services/books/books.service";
 
 @Component({
   selector: "app-categories",
@@ -9,7 +11,11 @@ import { CategoriesService } from "../../services/categories/categories.service"
 export class CategoriesComponent implements OnInit {
   categorias: any = [];
   breakpoint: number;
-  constructor(private categoriaService: CategoriesService) {}
+  constructor(
+    private categoriaService: CategoriesService,
+    private booksContext: BooksContextService,
+    private booksService: BooksService
+  ) {}
 
   ngOnInit() {
     this.breakpoint = window.innerWidth <= 900 ? 2 : 4;
@@ -20,6 +26,17 @@ export class CategoriesComponent implements OnInit {
     this.categoriaService.listCategories().subscribe(
       result => {
         this.categorias = result.slice(0, 8);
+      },
+      error => {
+        console.error(JSON.stringify(error));
+      }
+    );
+  }
+
+  filtrarLibros(categoria: any) {
+    this.booksService.searchLibros(categoria.nombreCategoria).subscribe(
+      result => {
+        this.booksContext.setEjemplares(result);
       },
       error => {
         console.error(JSON.stringify(error));

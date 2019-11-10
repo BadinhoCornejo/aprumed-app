@@ -27,11 +27,36 @@
     font-weight: 500;
   }
 
-  input[type="file" i] {
-    background-color: white !important;
-    border: 0px !important;
+  .file-label {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 36px;
   }
 
+  input[type="file"] {
+    margin-top: 4px;
+    -webkit-appearance: textfield;
+  }
+  input[type="file"]::-webkit-file-upload-button {
+    -webkit-appearance: textarea;
+    border: none;
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: none;
+    width: 0;
+  }
+  x::-webkit-file-upload-button,
+  input[type="file"]:after {
+    content: "Browse...";
+    display: inline-block;
+    left: 100%;
+    margin-left: 3px;
+    padding: 3px 8px 2px;
+    position: relative;
+    -webkit-appearance: button;
+  }
   .portrait {
     width: 100%;
     display: flex;
@@ -186,14 +211,19 @@
           style="margin-left: 16px;"
         >
           <div class="file has-name is-boxed">
-            <label class="file-label">
-              <input
-                class="file-input"
-                type="file"
-                formControlName="archivo"
-                (change)="cambioArchivo($event)"
-              />
+            <label class="file-label" *ngIf="!showPreview">
+              <i class="fa fa-image" aria-hidden="true"></i>
             </label>
+            <div class="portrait" *ngIf="showPreview">
+              <img src="{{ URLPublica }}" alt="portrait" />
+            </div>
+            <input
+              class="file-input"
+              type="file"
+              formControlName="archivo"
+              (change)="cambioArchivo($event)"
+              style="display: flex; flex-direction: column;"
+            />
           </div>
           <hr />
           <div *ngIf="isProgress" class="progressContainer">
@@ -204,28 +234,12 @@
               [color]="color"
             ></mat-progress-spinner>
           </div>
-          <button
-            mat-button
-            [ngClass]="{
-              button: true,
-              'is-success': true,
-              'is-large': true,
-              'is-loading': porcentaje > 0 && porcentaje < 100
-            }"
-            [disabled]="
-              !archivoForm.valid && (porcentaje > 0 && porcentaje < 100)
-            "
-          >
-            Subir archivo
-          </button>
+
           <a type="button" *ngIf="finalizado" (click)="setShowPreview()">
             <i class="fa fa-eye" aria-hidden="true"></i>
             Vista previa
           </a>
         </form>
-      </div>
-      <div class="portrait" *ngIf="showPreview">
-        <img src="{{ URLPublica }}" alt="portrait" />
       </div>
     </div>
   </div>

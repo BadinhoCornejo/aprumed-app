@@ -1,5 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import { SalesService } from "src/app/services/sales/sales.service";
+import { CartContextService } from "../../../services/cart-context.service";
+import { BooksContextService } from "../../../services/books-context.service";
+import { ShouldShowHMaterialService } from "../../../services/should-show-hmaterial.service";
+import { BooksService } from "../../../services/books/books.service";
+import { CartComponent } from "../../cart/cart.component";
+
+import { MatDialog } from "@angular/material";
+
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-ext-app-toolbar",
@@ -10,12 +18,30 @@ export class ExtAppToolbarComponent implements OnInit {
   user: any = JSON.parse(localStorage.getItem("user"));
   items: number;
   ejemplares: any = [];
+  searchParam: String = "";
 
-  constructor(private salesService: SalesService) {
+  constructor(
+    private router: Router,
+    private state: ShouldShowHMaterialService,
+    private cartContext: CartContextService,
+    private booksContext: BooksContextService,
+    private booksService: BooksService,
+    public dialog: MatDialog
+  ) {
     this.myCart();
   }
 
   ngOnInit() {}
+
+  openCartDialog() {
+    const dialogRef = this.dialog.open(CartComponent, {
+      width: "550px",
+      data: { ejemplares: this.ejemplares, usuario: this.user }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
 
   signOut() {
     localStorage.removeItem("user");
@@ -24,7 +50,7 @@ export class ExtAppToolbarComponent implements OnInit {
 
   myCart() {
     if (this.user !== null) {
-      this.salesService.myCart(this.user.usuarioID).subscribe(
+      this.cartContext.currentCart.subscribe(
         result => {
           this.ejemplares = result;
           this.items = this.ejemplares.length;
@@ -34,5 +60,30 @@ export class ExtAppToolbarComponent implements OnInit {
         }
       );
     }
+  }
+
+  searchLibros() {
+    this.booksService.searchLibros(this.searchParam).subscribe(
+      result => {
+        this.booksContext.setEjemplares(result);
+        this.state.setState(false);
+      },
+      error => {
+        console.error(JSON.stringify(error));
+      }
+    );
+  }
+
+  goHome() {
+    this.booksService.listarEjemplares(0).subscribe(
+      result => {
+        this.booksContext.setEjemplares(result);
+        this.state.setState(true);
+        this.router.navigateByUrl("");
+      },
+      error => {
+        console.error(JSON.stringify(error));
+      }
+    );
   }
 }

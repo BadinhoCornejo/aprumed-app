@@ -5,7 +5,7 @@
 >
   <mat-chip-list>
     <mat-grid-tile *ngFor="let categoria of categorias; let i = index">
-      <mat-chip id="i_{{ i }}">
+      <mat-chip id="i_{{ i }}" (click)="filtrarLibros(categoria)">
         {{ categoria.nombreCategoria }}
       </mat-chip>
     </mat-grid-tile>

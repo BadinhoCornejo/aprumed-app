@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
-import { SalesService } from "src/app/services/sales/sales.service";
+import { SalesService } from "../../../services/sales/sales.service";
+import { CartContextService } from "../../../services/cart-context.service";
 
 @Component({
   selector: "app-ext-app-layout",
@@ -14,6 +15,7 @@ export class ExtAppLayoutComponent implements OnInit {
   welcomeName: String;
 
   constructor(
+    private cartContext: CartContextService,
     private toastr: ToastrService,
     private salesService: SalesService
   ) {
@@ -21,6 +23,7 @@ export class ExtAppLayoutComponent implements OnInit {
 
     if (this.user !== null) {
       this.welcomeName = this.user.nombre.split(" ", 1);
+      this.getMyCart();
       this.toastr.info(
         "¿Buscas algo nuevo para leer?",
         "¡Hola! " + this.welcomeName + "."
@@ -31,4 +34,15 @@ export class ExtAppLayoutComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  getMyCart() {
+    this.salesService.myCart(this.user.usuarioID).subscribe(
+      result => {
+        this.cartContext.setCart(result);
+      },
+      error => {
+        console.error(JSON.stringify(error));
+      }
+    );
+  }
 }

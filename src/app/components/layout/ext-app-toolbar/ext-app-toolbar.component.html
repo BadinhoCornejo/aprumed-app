@@ -1,18 +1,26 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="start start">
   <div class="left-side">
-    <span [routerLink]="['/']">APRUMED</span>
+    <span (click)="goHome()">APRUMED</span>
   </div>
   <div class="center-side">
     <mat-form-field floatLabel="never" class="search-input">
-      <mat-icon matSuffix class="icon-placeholder"
+      <mat-icon
+        matSuffix
+        class="icon-placeholder"
+        (click)="searchLibros($event)"
         ><i class="fa fa-search" aria-hidden="true"></i
       ></mat-icon>
-      <input matInput placeholder="Buscar libros" />
+      <input
+        matInput
+        placeholder="Buscar libros"
+        [(ngModel)]="searchParam"
+        (keyup)="searchLibros($event)"
+      />
     </mat-form-field>
   </div>
   <span fxFlex></span>
   <div class="right-side">
-    <button *ngIf="user !== null">
+    <button (click)="openCartDialog()" *ngIf="user !== null">
       <i
         [matBadge]="items"
         matBadgeColor="warn"

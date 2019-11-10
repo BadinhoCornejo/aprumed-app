@@ -114,13 +114,11 @@ export class IntBooksComponent implements OnInit {
   }
 
   openEditLibroDialog(_libro: any) {
-    
     const dialogRef = this.dialog.open(DialogEditarLibroDialog, {
       width: "720px",
       data: { libro: _libro }
     });
     dialogRef.afterClosed().subscribe(result => {
-      
       this.getBooks();
     });
   }
@@ -257,6 +255,7 @@ export class DialogEjemplaresDialog implements OnInit {
       ejemplar.estado = "Inactivo";
     }
 
+    //Cambiar el estado de los objetos en el arreglo
     if (this.newEjemplares.length !== 0) {
       this.newEjemplares.map(item => {
         if (item.sku !== ejemplar.sku) {
@@ -421,6 +420,8 @@ export class DialogEditarLibroDialog implements OnInit {
           event.target.files[i].name
         );
       }
+
+      this.subirArchivo();
     } else {
       this.mensajeArchivo = "No hay un archivo seleccionado";
     }
@@ -455,9 +456,16 @@ export class DialogEditarLibroDialog implements OnInit {
     } else {
       this.finalizado = true;
     }
+
+    this.addPortada();
   }
 
   setShowPreview() {
+    this.getReference();
+    this.showPreview = !this.showPreview;
+  }
+
+  getReference() {
     let referencia = this.firebaseStorage.refPortada(this.nombreArchivo);
 
     const sub = referencia.getDownloadURL().subscribe(
@@ -468,8 +476,6 @@ export class DialogEditarLibroDialog implements OnInit {
         console.error(JSON.stringify(error));
       }
     );
-
-    this.showPreview = !this.showPreview;
   }
 
   actualizarLibro(e) {
@@ -487,7 +493,6 @@ export class DialogEditarLibroDialog implements OnInit {
       return;
     }
 
-    this.portada["url"] = this.URLPublica;
     this.categoria["categoriaID"] = this.form.value.categoriaID;
     this.libro.autor = this.form.value.autor;
     this.libro.fechaPublicacion = this.form.value.fechaPublicacion;
@@ -498,17 +503,7 @@ export class DialogEditarLibroDialog implements OnInit {
     delete this.libro.categoriaID;
     this.libro.categoria = this.categoria;
 
-    this.portada["nombrePortada"] = this.nombreArchivo;
-    this.portada["estado"] = "Activo";
-    this.booksService.addPortada(this.portada).subscribe(
-      result => {
-        console.log(result);
-      },
-
-      error => {
-        console.error(JSON.stringify(error));
-      }
-    );
+    this.addPortada();
 
     this.booksService.findPortadaByName(this.portada).subscribe(
       result => {
@@ -527,6 +522,22 @@ export class DialogEditarLibroDialog implements OnInit {
           }
         );
       },
+      error => {
+        console.error(JSON.stringify(error));
+      }
+    );
+  }
+
+  addPortada() {
+    this.getReference();
+    this.portada["url"] = this.URLPublica;
+    this.portada["nombrePortada"] = this.nombreArchivo;
+    this.portada["estado"] = "Activo";
+    this.booksService.addPortada(this.portada).subscribe(
+      result => {
+        console.log(result);
+      },
+
       error => {
         console.error(JSON.stringify(error));
       }

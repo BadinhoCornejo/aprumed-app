@@ -65,7 +65,6 @@ import { ExtHeaderComponent } from "./components/layout/ext-header/ext-header.co
 import { ExtMainSliderComponent } from "./components/layout/ext-main-slider/ext-main-slider.component";
 import { BooksComponent } from "./components/books/books.component";
 import { CategoriesComponent } from "./components/categories/categories.component";
-import { UsersComponent } from "./components/users/users.component";
 import { CartComponent } from "./components/cart/cart.component";
 import { SaleDetailComponent } from "./components/sale-detail/sale-detail.component";
 import { StoreLocationComponent } from "./components/store-location/store-location.component";
@@ -93,6 +92,7 @@ import {
 import { IntSalesComponent } from "./components/int-sales/int-sales.component";
 import { IntNewbookComponent } from "./components/int-newbook/int-newbook.component";
 import { IntNewuserComponent } from './components/int-newuser/int-newuser.component';
+import { SaleCoreComponent } from './components/sale-core/sale-core.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +104,6 @@ import { IntNewuserComponent } from './components/int-newuser/int-newuser.compon
     ExtMainSliderComponent,
     BooksComponent,
     CategoriesComponent,
-    UsersComponent,
     CartComponent,
     SaleDetailComponent,
     StoreLocationComponent,
@@ -125,7 +124,8 @@ import { IntNewuserComponent } from './components/int-newuser/int-newuser.compon
     DialogEjemplaresDialog,
     DialogEditarLibroDialog,
     IntNewbookComponent,
-    IntNewuserComponent
+    IntNewuserComponent,
+    SaleCoreComponent
   ],
   entryComponents: [
     DialogAddEjemplarDialog,
@@ -133,7 +133,9 @@ import { IntNewuserComponent } from './components/int-newuser/int-newuser.compon
     DialogEditarLibroDialog,
     DialogEditCategorieDialog,
     DialogNewCategorieDialog,
-    DialogEditarUsuarioDialog
+    DialogEditarUsuarioDialog,
+    CartComponent,
+    SaleCoreComponent
   ],
   imports: [
     HttpClientModule,

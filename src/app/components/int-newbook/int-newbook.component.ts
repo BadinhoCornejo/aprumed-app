@@ -130,6 +130,8 @@ export class IntNewbookComponent implements OnInit {
           event.target.files[i].name
         );
       }
+
+      this.subirArchivo();
     } else {
       this.mensajeArchivo = "No hay un archivo seleccionado";
     }
@@ -164,9 +166,16 @@ export class IntNewbookComponent implements OnInit {
     } else {
       this.finalizado = true;
     }
+
+    this.addPortada();
   }
 
   setShowPreview() {
+    this.getReference();
+    this.showPreview = !this.showPreview;
+  }
+
+  getReference() {
     let referencia = this.firebaseStorage.refPortada(this.nombreArchivo);
 
     const sub = referencia.getDownloadURL().subscribe(
@@ -177,8 +186,6 @@ export class IntNewbookComponent implements OnInit {
         console.error(JSON.stringify(error));
       }
     );
-
-    this.showPreview = !this.showPreview;
   }
 
   onSubmit(): void {
@@ -188,7 +195,6 @@ export class IntNewbookComponent implements OnInit {
       return;
     }
 
-    this.portada["url"] = this.URLPublica;
     this.categoria["categoriaID"] = this.form.value.categoriaID;
     this.libro.autor = this.form.value.autor;
     this.libro.fechaPublicacion = this.form.value.fechaPublicacion;
@@ -199,17 +205,7 @@ export class IntNewbookComponent implements OnInit {
     delete this.libro.categoriaID;
     this.libro.categoria = this.categoria;
 
-    this.portada["nombrePortada"] = this.nombreArchivo;
-    this.portada["estado"] = "Activo";
-    this.booksService.addPortada(this.portada).subscribe(
-      result => {
-        console.log(result);
-      },
-
-      error => {
-        console.error(JSON.stringify(error));
-      }
-    );
+    this.addPortada();
 
     this.booksService.findPortadaByName(this.portada).subscribe(
       result => {
@@ -233,4 +229,19 @@ export class IntNewbookComponent implements OnInit {
     );
   }
 
+  addPortada() {
+    this.getReference();
+    this.portada["url"] = this.URLPublica;
+    this.portada["nombrePortada"] = this.nombreArchivo;
+    this.portada["estado"] = "Activo";
+    this.booksService.addPortada(this.portada).subscribe(
+      result => {
+        console.log(result);
+      },
+
+      error => {
+        console.error(JSON.stringify(error));
+      }
+    );
+  }
 }

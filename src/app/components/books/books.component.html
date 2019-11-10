@@ -1,5 +1,5 @@
 <div class="base">
-  <div class="books-container">
+  <div class="books-container" *ngIf="booksLength">
     <mat-grid-list
       [cols]="breakpoint"
       [rowHeight]="rowHeight"
@@ -9,5 +9,13 @@
         <app-book-card [ejemplar]="ejemplar"></app-book-card>
       </mat-grid-tile>
     </mat-grid-list>
+  </div>
+  <div class="noBooks" *ngIf="!booksLength">
+    <span class="sad">
+      😢
+    </span>
+    <span class="message">
+      ¡Lo sentimos! No hemos podido encontrar libros
+    </span>
   </div>
 </div>

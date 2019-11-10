@@ -1,6 +1,6 @@
 @import './src/styles.sass'
 
-.new-book-container        
+.new-book-container
     width: 70%
     font-family: $generic-font
     h2
@@ -46,3 +46,24 @@ input[type="file" i]
     width: 100%
     @include flex(null, center)
     @include mv(16px, 16px)
+
+input[type="file"]
+    margin-top: 4px
+    -webkit-appearance: textfield
+
+input[type="file"]::-webkit-file-upload-button
+    -webkit-appearance: textarea
+    border: none
+    margin: 0
+    padding: 0
+    -webkit-appearance: none
+    width: 0
+
+    x::-webkit-file-upload-button,input[type="file"]:after
+    content: "Browse..."
+    display: inline-block
+    left: 100%
+    margin-left: 3px
+    padding: 3px 8px 2px
+    position: relative
+    -webkit-appearance: button

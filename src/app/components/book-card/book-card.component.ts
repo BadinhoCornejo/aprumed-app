@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { SalesService } from "src/app/services/sales/sales.service";
 import { ToastrService } from "ngx-toastr";
+import { BooksService } from "../../services/books/books.service";
+import { BooksContextService } from "../../services/books-context.service";
+import { CartContextService } from "../../services/cart-context.service";
 
 @Component({
   selector: "app-book-card",
@@ -15,6 +18,9 @@ export class BookCardComponent implements OnInit {
   ejemplares: any = [];
 
   constructor(
+    private booksService: BooksService,
+    private booksContext: BooksContextService,
+    private cartContext: CartContextService,
     private salesService: SalesService,
     private toastr: ToastrService
   ) {}
@@ -31,12 +37,36 @@ export class BookCardComponent implements OnInit {
       this.salesService.addItemCarrito(ejemplar.ejemplarID).subscribe(
         result => {
           this.enviarMensaje(ejemplar);
+          this.getEjemplares();
+          this.myCart(this.user.usuarioID);
         },
         error => {
           console.error(JSON.stringify(error));
         }
       );
     }
+  }
+
+  myCart(userID: number) {
+    this.salesService.myCart(userID).subscribe(
+      result => {
+        this.cartContext.setCart(result);
+      },
+      error => {
+        console.error(JSON.stringify(error));
+      }
+    );
+  }
+
+  getEjemplares() {
+    this.booksService.listarEjemplares(0).subscribe(
+      result => {
+        this.booksContext.setEjemplares(result);
+      },
+      error => {
+        console.error(JSON.stringify(error));
+      }
+    );
   }
 
   enviarMensaje(ejemplar: any) {

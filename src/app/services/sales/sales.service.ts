@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
+import { headers } from "../../../headers.js";
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -10,10 +11,39 @@ export class SalesService {
 
   constructor(private httpClient: HttpClient) {}
 
+  //Métodos para la venta
+
+  mySale(userID: number) {
+    return this.httpClient.get(`http://localhost:8080/sales/mySale/${userID}`, {
+      headers: headers
+    });
+  }
+
+  doSale(sale: any, subtotal: number) {
+    return this.httpClient.put(
+      `http://localhost:8080/sales/doSale/${subtotal}`,
+      sale,
+      {
+        headers: headers
+      }
+    );
+  }
+
+  addReceptor(receptor: any, ventaID: number) {
+    return this.httpClient.post(
+      `http://localhost:8080/sales/addReceptor/${ventaID}`,
+      receptor,
+      {
+        headers: headers
+      }
+    );
+  }
+
+  //Métodos para el carrito
+
   addItemCarrito(ejemplarID: number) {
     this.user = JSON.parse(localStorage.getItem("user"));
 
-    let headers = new HttpHeaders().set("Content-Type", "application/json");
     return this.httpClient.get(
       `http://localhost:8080/sales/agregarCarrito/${this.user.usuarioID}/${ejemplarID}`,
       {
@@ -22,14 +52,53 @@ export class SalesService {
     );
   }
 
-  myCart(userID: number){
+  myCart(userID: number) {
+    return this.httpClient.get(`http://localhost:8080/sales/${userID}/myCart`, {
+      headers: headers
+    });
+  }
 
-    let headers = new HttpHeaders().set("Content-Type", "application/json");
+  groupCart(userID: number) {
     return this.httpClient.get(
-      `http://localhost:8080/sales/${userID}/myCart`,
+      `http://localhost:8080/sales/${userID}/groupCart`,
       {
         headers: headers
       }
     );
+  }
+
+  countCart(userID: number, isbn: String) {
+    return this.httpClient.get(
+      `http://localhost:8080/sales/${userID}/${isbn}/countCart`,
+      {
+        headers: headers
+      }
+    );
+  }
+
+  addOneEjemplar(isbn: String) {
+    return this.httpClient.get(
+      `http://localhost:8080/sales/${isbn}/oneEjemplar`,
+      {
+        headers: headers
+      }
+    );
+  }
+
+  removeEjemplar(ejemplarID: String) {
+    return this.httpClient.put(
+      `http://localhost:8080/sales/removeItem/${ejemplarID}`,
+      {
+        headers: headers
+      }
+    );
+  }
+
+  //Para el mantenedor de ventas
+
+  getIntraSales() {
+    return this.httpClient.get(`http://localhost:8080/sales/listaVentas`, {
+      headers: headers
+    });
   }
 }
