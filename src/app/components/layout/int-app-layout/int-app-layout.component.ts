@@ -18,7 +18,7 @@ export class IntAppLayoutComponent implements OnInit {
   collapseHeight = "42px";
   displayMode = "flat";
   constructor(private toastr: ToastrService) {
-    this.user = JSON.parse(localStorage.getItem("user"));
+    this.user = JSON.parse(sessionStorage.getItem("user"));
     this.nombres =
       this.user.nombre.split(" ", 1) + " " + this.user.apellido.split(" ", 1);
 
@@ -38,7 +38,8 @@ export class IntAppLayoutComponent implements OnInit {
   ngOnInit() {}
 
   signOut() {
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("basicauth");
     window.location.reload();
   }
 }

@@ -6,7 +6,7 @@ import { BehaviorSubject } from "rxjs";
   providedIn: "root"
 })
 export class CartContextService {
-  user: any = JSON.parse(localStorage.getItem("user"));
+  user: any = JSON.parse(sessionStorage.getItem("user"));
   private cartSource: any = new BehaviorSubject([]);
   currentCart = this.cartSource.asObservable();
 

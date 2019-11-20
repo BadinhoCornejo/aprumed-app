@@ -14,14 +14,14 @@ export class SalesService {
   //Métodos para la venta
 
   mySale(userID: number) {
-    return this.httpClient.get(`http://localhost:8080/sales/mySale/${userID}`, {
+    return this.httpClient.get(`api/sales/mySale/${userID}`, {
       headers: headers
     });
   }
 
   doSale(sale: any, subtotal: number) {
     return this.httpClient.put(
-      `http://localhost:8080/sales/doSale/${subtotal}`,
+      `api/sales/doSale/${subtotal}`,
       sale,
       {
         headers: headers
@@ -31,7 +31,7 @@ export class SalesService {
 
   addReceptor(receptor: any, ventaID: number) {
     return this.httpClient.post(
-      `http://localhost:8080/sales/addReceptor/${ventaID}`,
+      `api/sales/addReceptor/${ventaID}`,
       receptor,
       {
         headers: headers
@@ -42,10 +42,10 @@ export class SalesService {
   //Métodos para el carrito
 
   addItemCarrito(ejemplarID: number) {
-    this.user = JSON.parse(localStorage.getItem("user"));
+    this.user = JSON.parse(sessionStorage.getItem("user"));
 
     return this.httpClient.get(
-      `http://localhost:8080/sales/agregarCarrito/${this.user.usuarioID}/${ejemplarID}`,
+      `api/sales/agregarCarrito/${this.user.usuarioID}/${ejemplarID}`,
       {
         headers: headers
       }
@@ -53,14 +53,12 @@ export class SalesService {
   }
 
   myCart(userID: number) {
-    return this.httpClient.get(`http://localhost:8080/sales/${userID}/myCart`, {
-      headers: headers
-    });
+    return this.httpClient.get(`api/sales/${userID}/myCart`);
   }
 
   groupCart(userID: number) {
     return this.httpClient.get(
-      `http://localhost:8080/sales/${userID}/groupCart`,
+      `api/sales/${userID}/groupCart`,
       {
         headers: headers
       }
@@ -69,7 +67,7 @@ export class SalesService {
 
   countCart(userID: number, isbn: String) {
     return this.httpClient.get(
-      `http://localhost:8080/sales/${userID}/${isbn}/countCart`,
+      `api/sales/${userID}/${isbn}/countCart`,
       {
         headers: headers
       }
@@ -78,7 +76,7 @@ export class SalesService {
 
   addOneEjemplar(isbn: String) {
     return this.httpClient.get(
-      `http://localhost:8080/sales/${isbn}/oneEjemplar`,
+      `api/sales/${isbn}/oneEjemplar`,
       {
         headers: headers
       }
@@ -87,7 +85,7 @@ export class SalesService {
 
   removeEjemplar(ejemplarID: String) {
     return this.httpClient.put(
-      `http://localhost:8080/sales/removeItem/${ejemplarID}`,
+      `api/sales/removeItem/${ejemplarID}`,
       {
         headers: headers
       }
@@ -97,7 +95,7 @@ export class SalesService {
   //Para el mantenedor de ventas
 
   getIntraSales() {
-    return this.httpClient.get(`http://localhost:8080/sales/listaVentas`, {
+    return this.httpClient.get(`api/admin/listaVentas`, {
       headers: headers
     });
   }

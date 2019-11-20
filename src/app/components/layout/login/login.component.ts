@@ -40,7 +40,11 @@ export class LoginComponent implements OnInit {
     this.usersService.verificarAcceso(this.form.value).subscribe(
       result => {
         this.user = result;
-        this.user && localStorage.setItem("user", JSON.stringify(this.user));
+        console.log(this.user);
+        this.user && sessionStorage.setItem("user", JSON.stringify(this.user));
+        let authString =
+          "Basic " + btoa(this.user.email + ":" + this.form.value.usrPassword);
+        sessionStorage.setItem("basicauth", authString);
         if (this.user.tipoUsuario.tipoUsuarioID === 1) {
           this.usersService.setIsAdminLog(false);
           this.router.navigateByUrl("");

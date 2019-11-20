@@ -28,7 +28,7 @@ export class BookCardComponent implements OnInit {
   ngOnInit() {}
 
   addToCart(ejemplar: any) {
-    this.user = JSON.parse(localStorage.getItem("user"));
+    this.user = JSON.parse(sessionStorage.getItem("user"));
 
     this.cart.push(ejemplar);
 

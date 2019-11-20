@@ -137,26 +137,16 @@ export class DialogEditarUsuarioDialog implements OnInit {
   ) {
     this.getTiposUsuario();
     this.usuario = data.user;
-    this.form = this.formBuilder.group(
-      {
-        apellido: [this.usuario.apellido, Validators.required],
-        nombre: [this.usuario.nombre, Validators.required],
+    this.form = this.formBuilder.group({
+      apellido: [this.usuario.apellido, Validators.required],
+      nombre: [this.usuario.nombre, Validators.required],
 
-        sexo: [this.usuario.sexo, Validators.required],
+      sexo: [this.usuario.sexo, Validators.required],
 
-        telefono: [this.usuario.telefono, Validators.required],
-        tipoUsuarioID: ["", Validators.required],
-        email: [this.usuario.email, [Validators.required, Validators.email]],
-        usrPassword: [
-          this.usuario.usrPassword,
-          [Validators.required, Validators.minLength(6)]
-        ],
-        confirmPassword: ["", Validators.required]
-      },
-      {
-        validator: MustMatch("usrPassword", "confirmPassword")
-      }
-    );
+      telefono: [this.usuario.telefono, Validators.required],
+      tipoUsuarioID: ["", Validators.required],
+      email: [this.usuario.email, [Validators.required, Validators.email]]
+    });
   }
 
   ngOnInit() {}
@@ -263,6 +253,7 @@ export class DialogEditarUsuarioDialog implements OnInit {
   }
 
   addAvatar() {
+    this.getReference();
     this.avatar.url = this.URLPublica;
     this.avatar.nombreAvatar = this.nombreArchivo;
     this.avatar.estado = "Activo";
@@ -287,7 +278,6 @@ export class DialogEditarUsuarioDialog implements OnInit {
     this.usuario.nombre = this.form.value.nombre;
     this.usuario.apellido = this.form.value.apellido;
     this.usuario.email = this.form.value.email;
-    this.usuario.usrPassword = this.form.value.usrPassword;
     this.usuario.sexo = this.form.value.sexo;
     this.usuario.telefono = this.form.value.telefono;
     this.usuario.tipoUsuario.tipoUsuarioID = this.form.value.tipoUsuarioID;

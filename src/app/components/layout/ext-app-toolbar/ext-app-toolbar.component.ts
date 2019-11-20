@@ -15,7 +15,7 @@ import { Router } from "@angular/router";
   styleUrls: ["./ext-app-toolbar.component.sass"]
 })
 export class ExtAppToolbarComponent implements OnInit {
-  user: any = JSON.parse(localStorage.getItem("user"));
+  user: any = JSON.parse(sessionStorage.getItem("user"));
   items: number;
   ejemplares: any = [];
   searchParam: String = "";
@@ -44,7 +44,8 @@ export class ExtAppToolbarComponent implements OnInit {
   }
 
   signOut() {
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("basicauth");
     window.location.reload();
   }
 

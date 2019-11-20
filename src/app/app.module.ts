@@ -1,11 +1,11 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { NgModule, Injectable } from "@angular/core";
 
 //ROUTING
 import { RouterModule } from "@angular/router";
 
 //Html Client
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 //STYLES
 
@@ -91,8 +91,9 @@ import {
 } from "./components/int-users/int-users.component";
 import { IntSalesComponent } from "./components/int-sales/int-sales.component";
 import { IntNewbookComponent } from "./components/int-newbook/int-newbook.component";
-import { IntNewuserComponent } from './components/int-newuser/int-newuser.component';
-import { SaleCoreComponent } from './components/sale-core/sale-core.component';
+import { IntNewuserComponent } from "./components/int-newuser/int-newuser.component";
+import { SaleCoreComponent } from "./components/sale-core/sale-core.component";
+import { BasicAuthInterceptorService } from "./services/basic-auth-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -231,7 +232,12 @@ import { SaleCoreComponent } from './components/sale-core/sale-core.component';
     CategoriesService,
     SalesService,
     AuthAdminGuard,
-    AuthUserGuard
+    AuthUserGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BasicAuthInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

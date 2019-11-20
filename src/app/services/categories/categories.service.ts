@@ -10,14 +10,14 @@ export class CategoriesService {
   constructor(private httpClient: HttpClient) {}
 
   listCategories(): Observable<any> {
-    return this.httpClient.get("http://localhost:8080/categories/", {
+    return this.httpClient.get("api/categories/", {
       headers: headers
     });
   }
 
   editCategorie(categoria: any) {
     return this.httpClient.put(
-      "http://localhost:8080/categories/edit",
+      "api/admin/editCategorie",
       categoria,
       {
         headers: headers
@@ -27,7 +27,7 @@ export class CategoriesService {
 
   newCategorie(categoria: any) {
     return this.httpClient.post(
-      "http://localhost:8080/categories/new",
+      "api/admin/newCategorie",
       categoria,
       {
         headers: headers

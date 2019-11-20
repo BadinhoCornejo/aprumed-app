@@ -11,7 +11,7 @@ export class BooksService {
 
   listarEjemplares(i: number) {
     return this.httpClient.get(
-      `http://localhost:8080/books/mainEjemplares/${i}`,
+      `/api/books/mainEjemplares/${i}`,
       {
         headers: headers
       }
@@ -20,7 +20,7 @@ export class BooksService {
 
   searchLibros(parameter: String) {
     return this.httpClient.get(
-      `http://localhost:8080/books/searchEjemplar/${parameter}`,
+      `api/books/searchEjemplar/${parameter}`,
       {
         headers: headers
       }
@@ -29,7 +29,7 @@ export class BooksService {
 
   verLibro(libroID: number) {
     return this.httpClient.get(
-      `http://localhost:8080/books/verLibro/${libroID}`,
+      `api/books/verLibro/${libroID}`,
       {
         headers: headers
       }
@@ -37,17 +37,17 @@ export class BooksService {
   }
 
   listarLibros() {
-    return this.httpClient.get("http://localhost:8080/books/", {
+    return this.httpClient.get("/api/admin/listBooks", {
       headers: headers
     });
   }
 
-  agregarEjemplares(_ejemplares: any) {
-    let ejemplares = JSON.stringify(_ejemplares);
+  agregarEjemplares(ejemplares: any) {
+    let _ejemplares = JSON.stringify(ejemplares);
 
     return this.httpClient.post(
-      "http://localhost:8080/books/addEjemplares",
-      ejemplares,
+      "api/books/addEjemplares",
+      _ejemplares,
       {
         headers: headers
       }
@@ -55,20 +55,20 @@ export class BooksService {
   }
 
   addLibro(libro: any) {
-    return this.httpClient.post("http://localhost:8080/books/new", libro, {
+    return this.httpClient.post("api/admin/newBook", libro, {
       headers: headers
     });
   }
 
   editLibro(libro: any) {
-    return this.httpClient.put("http://localhost:8080/books/edit", libro, {
+    return this.httpClient.put("api/admin/editBook", libro, {
       headers: headers
     });
   }
 
   getLibroEjemplares(libroID: number) {
     return this.httpClient.get(
-      `http://localhost:8080/books/ejemplaresLibro/${libroID}`,
+      `api/books/ejemplaresLibro/${libroID}`,
       {
         headers: headers
       }
@@ -77,7 +77,7 @@ export class BooksService {
 
   deleteEjemplar(ejemplares: any) {
     return this.httpClient.put(
-      `http://localhost:8080/books/deleteEjemplar`,
+      `api/books/deleteEjemplar`,
       ejemplares,
       {
         headers: headers
@@ -87,7 +87,7 @@ export class BooksService {
 
   findPortadaByName(portada: any) {
     return this.httpClient.post(
-      "http://localhost:8080/books/buscarPortada",
+      "api/books/buscarPortada",
       portada,
       {
         headers: headers
@@ -97,7 +97,7 @@ export class BooksService {
 
   addPortada(portada: any) {
     return this.httpClient.post(
-      "http://localhost:8080/books/addPortada",
+      "api/books/addPortada",
       portada,
       {
         headers: headers

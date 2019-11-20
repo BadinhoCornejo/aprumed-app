@@ -10,7 +10,7 @@ export class UsersService {
   private isAdminLog: Boolean = false;
   user: any;
   constructor(private httpClient: HttpClient) {
-    this.user = JSON.parse(localStorage.getItem("user"));
+    this.user = JSON.parse(sessionStorage.getItem("user"));
     console.log(this.user);
     if (this.user === null) {
       this.isAdminLog = false;
@@ -30,38 +30,38 @@ export class UsersService {
   verificarAcceso(_usuario: any) {
     let usuario = JSON.stringify(_usuario);
 
-    return this.httpClient.post("http://localhost:8080/users/login", usuario, {
+    return this.httpClient.post("api/users/login", usuario, {
       headers: headers
     });
   }
 
   getUsers() {
-    return this.httpClient.get("http://localhost:8080/users/", {
+    return this.httpClient.get("api/admin/listUsers", {
       headers: headers
     });
   }
 
   getTiposUsuario() {
-    return this.httpClient.get("http://localhost:8080/users/tiposUsuario", {
+    return this.httpClient.get("api/users/tiposUsuario", {
       headers: headers
     });
   }
 
   addUser(usuario: any) {
-    return this.httpClient.post("http://localhost:8080/users/new", usuario, {
+    return this.httpClient.post("api/users/new", usuario, {
       headers: headers
     });
   }
 
   editUser(usuario: any) {
-    return this.httpClient.put("http://localhost:8080/users/edit", usuario, {
+    return this.httpClient.put("api/users/edit", usuario, {
       headers: headers
     });
   }
 
   findAvatarByName(avatar: any) {
     return this.httpClient.post(
-      "http://localhost:8080/users/buscarAvatar",
+      "api/users/buscarAvatar",
       avatar,
       {
         headers: headers
@@ -71,7 +71,7 @@ export class UsersService {
 
   addAvatar(avatar: any) {
     return this.httpClient.post(
-      "http://localhost:8080/users/addAvatar",
+      "api/users/addAvatar",
       avatar,
       {
         headers: headers
@@ -81,7 +81,7 @@ export class UsersService {
 
   verifyEmail(email: String) {
     return this.httpClient.post(
-      `http://localhost:8080/users/verificarEmail/${email}`,
+      `api/users/verificarEmail/${email}`,
       {
         headers: headers
       }
