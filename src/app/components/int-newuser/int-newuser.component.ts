@@ -96,7 +96,7 @@ export class IntNewuserComponent implements OnInit {
     this.userService.addUser(this.usuario).subscribe(
       result => {
         let action = "VOLVER";
-        this.snackBar.open("Libro agregado!", action, {
+        this.snackBar.open("Usuario registrado!", action, {
           duration: 2000
         });
       },
