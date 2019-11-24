@@ -80,15 +80,7 @@ export class IntNewbookComponent implements OnInit {
     this.form = this.formBuilder.group({
       titulo: ["", Validators.required],
       autor: ["", Validators.required],
-      fechaPublicacion: [
-        "",
-        Validators.compose([
-          Validators.required,
-          Validators.pattern(
-            `(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))`
-          )
-        ])
-      ],
+      fechaPublicacion: ["", Validators.required],
       isbn: ["", Validators.required],
       precio: [
         "",
@@ -186,6 +178,11 @@ export class IntNewbookComponent implements OnInit {
         console.error(JSON.stringify(error));
       }
     );
+  }
+
+  onReset() {
+    this.submitted = false;
+    this.form.reset();
   }
 
   onSubmit(): void {

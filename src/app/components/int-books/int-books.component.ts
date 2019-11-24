@@ -362,15 +362,7 @@ export class DialogEditarLibroDialog implements OnInit {
     this.form = this.formBuilder.group({
       titulo: [this.libro.titulo, Validators.required],
       autor: [this.libro.autor, Validators.required],
-      fechaPublicacion: [
-        this.libro.fechaPublicacion,
-        Validators.compose([
-          Validators.required,
-          Validators.pattern(
-            `(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))`
-          )
-        ])
-      ],
+      fechaPublicacion: [this.libro.fechaPublicacion, Validators.required],
       isbn: [this.libro.isbn, Validators.required],
       precio: [
         this.libro.precio,

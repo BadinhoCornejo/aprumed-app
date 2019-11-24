@@ -31,14 +31,37 @@
     display: flex;
     justify-content: center;
     margin-top: 16px;
-    margin-bottom: 8px;
+    margin-bottom: 32px;
     font-size: 36px;
   }
 
   input[type="file"] {
     margin-top: 4px;
+    padding-top: 50px;
+    padding-bottom: 40px;
     -webkit-appearance: textfield;
+    top: 215px;
+    position: absolute;
   }
+
+  input[type="file"].hide {
+    margin-top: 4px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    -webkit-appearance: textfield;
+    top: 460px;
+    position: absolute;
+  }
+
+  input[type="file"].hide_wURL {
+    margin-top: 4px;
+    padding-top: 0px;
+    padding-bottom: 40px;
+    -webkit-appearance: textfield;
+    top: 275px;
+    position: absolute;
+  }
+
   input[type="file"]::-webkit-file-upload-button {
     -webkit-appearance: textarea;
     border: none;
@@ -49,19 +72,32 @@
   }
   x::-webkit-file-upload-button,
   input[type="file"]:after {
-    content: "Browse...";
-    display: inline-block;
+    content: "Coloca la imagen aquí";
+    display: block;
+    margin-top: 16px;
     left: 100%;
-    margin-left: 3px;
-    padding: 3px 8px 2px;
-    position: relative;
-    -webkit-appearance: button;
+  }
+
+  x::-webkit-file-upload-button,
+  input[type="file"].hide:after {
+    content: "Coloca la imagen aquí";
+    display: none;
+    margin-top: 16px;
+    left: 100%;
+  }
+  x::-webkit-file-upload-button,
+  input[type="file"].hide_wURL:after {
+    content: "Coloca la imagen aquí";
+    display: none;
+    margin-top: 16px;
+    left: 100%;
   }
   .portrait {
     width: 100%;
     display: flex;
     justify-content: center;
     margin-top: 16px;
+    margin-bottom: 32px;
   }
   .portrait img {
     height: 224px;
@@ -115,7 +151,7 @@
           <mat-label>Fecha de publicación</mat-label>
           <input
             matInput
-            type="text"
+            type="date"
             formControlName="fechaPublicacion"
             placeholder="Ingrese la fecha de publicación"
             [ngClass]="{ 'is-invalid': submitted && f.fechaPublicacion.errors }"
@@ -126,9 +162,6 @@
           >
             <div *ngIf="f.fechaPublicacion.errors.required">
               Este campo es requerido
-            </div>
-            <div *ngIf="f.fechaPublicacion.errors.pattern">
-              Por favor siga el patrón (YYYY-MM-AA)
             </div>
           </div>
         </mat-form-field>
@@ -218,7 +251,7 @@
               <img src="{{ URLPublica }}" alt="portrait" />
             </div>
             <input
-              class="file-input"
+              [ngClass]="{'hide_wURL':URLPublica!=='' && !showPreview,'hide':showPreview}"
               type="file"
               formControlName="archivo"
               (change)="cambioArchivo($event)"

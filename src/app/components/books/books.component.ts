@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { BooksService } from "../../services/books/books.service";
+import { CategoriesService } from "../../services/categories/categories.service";
 import { BooksContextService } from "../../services/books-context.service";
 
 @Component({
@@ -10,11 +11,16 @@ import { BooksContextService } from "../../services/books-context.service";
 export class BooksComponent implements OnInit {
   ejemplares: any = [];
   booksLength: number;
+
+  categories: any = [];
+  categoriesLength: number;
+
   breakpoint: number;
   rowHeight: string;
 
   constructor(
     private booksService: BooksService,
+    private categoriesService: CategoriesService,
     private booksContext: BooksContextService
   ) {}
 
@@ -28,14 +34,22 @@ export class BooksComponent implements OnInit {
     }
 
     this.rowHeight = window.innerWidth <= 900 ? "1:1.2" : "1:1.5";
-    this.listBooks();
+    this.listCategories();
   }
 
-  listBooks() {
+  listCategories() {
+    this.categoriesService.categoriesMain().subscribe(value => {
+      this.categories = value;
+      this.categoriesLength = this.categories.length;
+    });
+
     this.booksContext.currentEjemplares.subscribe(
       value => {
         this.ejemplares = value;
         this.booksLength = this.ejemplares.length;
+        /*Seccionar por las categorias que tengan
+         mayor cantiad de productos (establecer un máximo)
+        */
       },
       error => {
         console.error(JSON.stringify(error));

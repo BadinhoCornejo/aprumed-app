@@ -15,23 +15,27 @@ export class CategoriesService {
     });
   }
 
+  getCategoryById(id: number) {
+    return this.httpClient.get(`api/categories/categoriaById/${id}`, {
+      headers: headers
+    });
+  }
+
+  categoriesMain(): Observable<any> {
+    return this.httpClient.get("api/categories/categoriesMain", {
+      headers: headers
+    });
+  }
+
   editCategorie(categoria: any) {
-    return this.httpClient.put(
-      "api/admin/editCategorie",
-      categoria,
-      {
-        headers: headers
-      }
-    );
+    return this.httpClient.put("api/admin/editCategorie", categoria, {
+      headers: headers
+    });
   }
 
   newCategorie(categoria: any) {
-    return this.httpClient.post(
-      "api/admin/newCategorie",
-      categoria,
-      {
-        headers: headers
-      }
-    );
+    return this.httpClient.post("api/admin/newCategorie", categoria, {
+      headers: headers
+    });
   }
 }

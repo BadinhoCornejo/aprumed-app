@@ -23,7 +23,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   listCategories() {
-    this.categoriaService.listCategories().subscribe(
+    this.categoriaService.categoriesMain().subscribe(
       result => {
         this.categorias = result.slice(0, 8);
       },
