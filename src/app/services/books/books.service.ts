@@ -9,8 +9,8 @@ import { Observable } from "rxjs";
 export class BooksService {
   constructor(private httpClient: HttpClient) {}
 
-  listarEjemplares(i: number) {
-    return this.httpClient.get(`api/books/mainEjemplares/${i}`, {
+  listarEjemplares() {
+    return this.httpClient.get(`api/books/mainEjemplares`, {
       headers: headers
     });
   }

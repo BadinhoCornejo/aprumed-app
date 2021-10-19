@@ -9,7 +9,7 @@ export class BooksContextService {
   private ejemplaresSource: any = new BehaviorSubject([]);
   currentEjemplares = this.ejemplaresSource.asObservable();
 
-  constructor(private booksService: BooksService) {
+  constructor(private booksService?: BooksService) {
     this.getEjemplares();
   }
 
@@ -18,7 +18,7 @@ export class BooksContextService {
   }
 
   getEjemplares() {
-    this.booksService.listarEjemplares(0).subscribe(
+    this.booksService.listarEjemplares().subscribe(
       result => {
         this.ejemplaresSource.next(result);
       },

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { BooksService } from "../../services/books/books.service";
 import { CategoriesService } from "../../services/categories/categories.service";
+import { BooksContextService } from "src/app/services/books-context.service";
 
 @Component({
   selector: "app-books-section",
@@ -10,6 +11,7 @@ import { CategoriesService } from "../../services/categories/categories.service"
 export class BooksSectionComponent implements OnInit {
   @Input() categoryId: number;
 
+  sourceEjemplares: any = [];
   ejemplares: any = [];
   sections: any = [];
   sectionsLength: number;
@@ -17,7 +19,8 @@ export class BooksSectionComponent implements OnInit {
 
   constructor(
     private booksService: BooksService,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private booksContext: BooksContextService
   ) {}
 
   ngOnInit() {
@@ -25,12 +28,31 @@ export class BooksSectionComponent implements OnInit {
   }
 
   listEjemplares() {
-    this.booksService
-      .ejemplaresByCategorie(this.categoryId)
-      .subscribe(result => {
-        this.ejemplares = result;
-        this.createSections();
+    this.booksContext.currentEjemplares.subscribe(result => {
+      console.log(
+        "-------------------------RESULT:",
+        result,
+        "-----------------------------"
+      );
+
+      this.sourceEjemplares = result;
+
+      console.log(
+        "-------------------------SOURCEEJEMPLARES:",
+        result,
+        "-----------------------------"
+      );
+
+      this.ejemplares = [];
+      this.sourceEjemplares.map(item => {
+        let cat = item.libro.categoria;
+        if (cat.categoriaID === this.categoryId) {
+          this.ejemplares.push(item);
+        }
       });
+
+      this.createSections();
+    });
   }
 
   getCategory() {
@@ -45,6 +67,11 @@ export class BooksSectionComponent implements OnInit {
   }
 
   createSections() {
+    console.log(
+      "-------------------------FINAL EJEMPLARES:",
+      this.ejemplares,
+      "-----------------------------"
+    );
     this.sectionsLength = this.ejemplares.length;
 
     this.categoriesService.getCategoryById(this.categoryId).subscribe(
@@ -85,24 +112,6 @@ export class BooksSectionComponent implements OnInit {
             i++;
           }
           console.log(this.sections);
-          
-          /**
-           * while (i < this.sectionsLength) {
-            let section = {
-              sectionID: categoryName + "_" + i,
-              prevSection:
-                i === 0
-                  ? categoryName + "_" + (this.sectionsLength - 1)
-                  : categoryName + "_" + (i - 1),
-              nextSection:
-                i === this.sectionsLength - 1
-                  ? categoryName + "_" + 0
-                  : categoryName + "_" + (i + 1)
-            };
-            this.sections.push(section);
-            i++;
-          }
-           */
         }
       },
       error => {

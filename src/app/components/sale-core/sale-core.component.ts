@@ -59,7 +59,7 @@ export class SaleCoreComponent implements OnInit {
   ngOnInit() {}
 
   getBooks() {
-    this.booksService.listarEjemplares(0).subscribe(
+    this.booksService.listarEjemplares().subscribe(
       result => {
         this.booksContext.setEjemplares(result);
       },

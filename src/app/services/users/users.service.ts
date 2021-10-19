@@ -27,10 +27,10 @@ export class UsersService {
     return this.isAdminLog;
   }
 
-  verificarAcceso(_usuario: any) {
-    let usuario = JSON.stringify(_usuario);
+  verificarAcceso(usuario: any) {
+    let _usuario = JSON.stringify(usuario);
 
-    return this.httpClient.post("api/users/login", usuario, {
+    return this.httpClient.post("api/users/login", _usuario, {
       headers: headers
     });
   }

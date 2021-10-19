@@ -70,7 +70,7 @@ export class CartComponent implements OnInit {
 
   //Actualizar el contexto actual
   getEjemplares() {
-    this.booksService.listarEjemplares(0).subscribe(
+    this.booksService.listarEjemplares().subscribe(
       result => {
         this.booksContext.setEjemplares(result);
       },

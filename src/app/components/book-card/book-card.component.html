@@ -3,7 +3,7 @@
   <mat-card>
     <img mat-card-image src="{{ ejemplar.libro.portada.url }}" />
     <mat-card-content>
-      <div class="info">
+      <div class="info" id="{{ejemplar.ejemplarID}}">
         <span>{{ ejemplar.libro.autor }}</span>
         <span>S/ {{ ejemplar.libro.precio }}</span>
       </div>

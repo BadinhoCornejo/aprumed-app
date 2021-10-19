@@ -48,7 +48,7 @@ export class BooksComponent implements OnInit {
         this.ejemplares = value;
         this.booksLength = this.ejemplares.length;
         /*Seccionar por las categorias que tengan
-         mayor cantiad de productos (establecer un máximo)
+         mayor cantiad de productos (establecer un máximo = 8)
         */
       },
       error => {
