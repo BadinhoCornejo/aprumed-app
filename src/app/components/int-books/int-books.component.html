@@ -68,16 +68,24 @@
           <button
             mat-menu-item
             (click)="openAddEjemplarDialog(element.libroID, element.titulo)"
+            disableRipple
           >
             Agregar ejemplar
           </button>
           <button
             mat-menu-item
             (click)="openEjemplaresDialog(element.ejemplares)"
+            disableRipple
           >
             Ver ejemplares
           </button>
-          <button mat-menu-item (click)="openEditLibroDialog(element)">Editar</button>
+          <button
+            mat-menu-item
+            (click)="openEditLibroDialog(element)"
+            disableRipple
+          >
+            Editar
+          </button>
         </mat-menu>
       </td>
     </ng-container>

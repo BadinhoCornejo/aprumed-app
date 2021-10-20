@@ -1,11 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import {
   FormGroup,
-  FormArray,
   FormBuilder,
   Validators,
-  Form,
-  FormControl
+  FormControl,
 } from "@angular/forms";
 import { FirebaseStorageService } from "../../services/firebase/firebase-storage.service";
 import { CategoriesService } from "src/app/services/categories/categories.service";
@@ -15,7 +13,7 @@ import { MatSnackBar } from "@angular/material";
 @Component({
   selector: "app-int-newbook",
   templateUrl: "./int-newbook.component.html",
-  styleUrls: ["./int-newbook.component.sass"]
+  styleUrls: ["./int-newbook.component.sass"],
 })
 export class IntNewbookComponent implements OnInit {
   form: FormGroup;
@@ -29,31 +27,31 @@ export class IntNewbookComponent implements OnInit {
     stock: "",
     titulo: "",
     categoria: {
-      categoriaID: ""
+      categoriaID: "",
     },
     estado: "",
     portada: {
       url: "",
       portadaID: "",
       estado: "",
-      nombrePortada: ""
-    }
+      nombrePortada: "",
+    },
   };
   portada: any = {
     url: "",
     portadaID: "",
     estado: "",
-    nombrePortada: ""
+    nombrePortada: "",
   };
   categoria: any = {
-    categoriaID: ""
+    categoriaID: "",
   };
   portadaID: any;
   categorias: any = [];
   color = "primary";
 
   public archivoForm = new FormGroup({
-    archivo: new FormControl(null, Validators.required)
+    archivo: new FormControl(null, Validators.required),
   });
 
   mensajeArchivo = "No hay un archivo seleccionado";
@@ -86,10 +84,10 @@ export class IntNewbookComponent implements OnInit {
         "",
         Validators.compose([
           Validators.required,
-          Validators.pattern(`[0-9]+(\\.[0-9][0-9]?)?`)
-        ])
+          Validators.pattern(`[0-9]+(\\.[0-9][0-9]?)?`),
+        ]),
       ],
-      categoriaID: ["", Validators.required]
+      categoriaID: ["", Validators.required],
     });
   }
 
@@ -101,10 +99,10 @@ export class IntNewbookComponent implements OnInit {
 
   getCategories() {
     this.categoriesService.listCategories().subscribe(
-      result => {
+      (result) => {
         this.categorias = result;
       },
-      error => {
+      (error) => {
         console.error(JSON.stringify(error));
       }
     );
@@ -136,7 +134,7 @@ export class IntNewbookComponent implements OnInit {
 
     let verifyFile;
 
-    referencia.getDownloadURL().subscribe(URL => {
+    referencia.getDownloadURL().subscribe((URL) => {
       verifyFile = URL;
     });
 
@@ -147,7 +145,7 @@ export class IntNewbookComponent implements OnInit {
       );
 
       //Cambia el porcentaje
-      tarea.percentageChanges().subscribe(porcentaje => {
+      tarea.percentageChanges().subscribe((porcentaje) => {
         this.isProgress = true;
         this.porcentaje = Math.round(porcentaje);
         if (this.porcentaje == 100) {
@@ -171,10 +169,10 @@ export class IntNewbookComponent implements OnInit {
     let referencia = this.firebaseStorage.refPortada(this.nombreArchivo);
 
     const sub = referencia.getDownloadURL().subscribe(
-      URL => {
+      (URL) => {
         this.URLPublica = URL;
       },
-      error => {
+      (error) => {
         console.error(JSON.stringify(error));
       }
     );
@@ -205,26 +203,28 @@ export class IntNewbookComponent implements OnInit {
     this.addPortada();
 
     this.booksService.findPortadaByName(this.portada).subscribe(
-      result => {
+      (result) => {
         this.libro.portada = result;
 
         this.booksService.addLibro(this.libro).subscribe(
-          result => {
+          (result) => {
             let action = "VOLVER";
             this.snackBar.open("Libro agregado!", action, {
-              duration: 2000
+              duration: 2000,
             });
           },
-          error => {
+          (error) => {
             console.error(JSON.stringify(error));
           }
         );
       },
-      error => {
+      (error) => {
         console.error(JSON.stringify(error));
       }
     );
   }
+
+  onNoClick(): void {}
 
   addPortada() {
     this.getReference();
@@ -232,11 +232,11 @@ export class IntNewbookComponent implements OnInit {
     this.portada["nombrePortada"] = this.nombreArchivo;
     this.portada["estado"] = "Activo";
     this.booksService.addPortada(this.portada).subscribe(
-      result => {
+      (result) => {
         console.log(result);
       },
 
-      error => {
+      (error) => {
         console.error(JSON.stringify(error));
       }
     );

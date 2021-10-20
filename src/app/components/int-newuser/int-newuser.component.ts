@@ -1,11 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  Form,
-  FormControl
-} from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
 import { UsersService } from "src/app/services/users/users.service";
 import { MustMatch } from "../../_helpers/must-match.validator";
@@ -13,7 +7,7 @@ import { MustMatch } from "../../_helpers/must-match.validator";
 @Component({
   selector: "app-int-newuser",
   templateUrl: "./int-newuser.component.html",
-  styleUrls: ["./int-newuser.component.sass"]
+  styleUrls: ["./int-newuser.component.sass"],
 })
 export class IntNewuserComponent implements OnInit {
   form: FormGroup;
@@ -28,8 +22,8 @@ export class IntNewuserComponent implements OnInit {
     sexo: "",
     telefono: "",
     tipoUsuario: {
-      tipoUsuarioID: ""
-    }
+      tipoUsuarioID: "",
+    },
   };
   tiposUsuario: any = [];
   sexos: any = ["Masculino", "Femenino"];
@@ -51,12 +45,12 @@ export class IntNewuserComponent implements OnInit {
         email: [this.usuario.email, [Validators.required, Validators.email]],
         usrPassword: [
           this.usuario.usrPassword,
-          [Validators.required, Validators.minLength(6)]
+          [Validators.required, Validators.minLength(6)],
         ],
-        confirmPassword: ["", Validators.required]
+        confirmPassword: ["", Validators.required],
       },
       {
-        validator: MustMatch("usrPassword", "confirmPassword")
+        validator: MustMatch("usrPassword", "confirmPassword"),
       }
     );
   }
@@ -65,10 +59,10 @@ export class IntNewuserComponent implements OnInit {
 
   getTiposUsuario() {
     this.userService.getTiposUsuario().subscribe(
-      result => {
+      (result) => {
         this.tiposUsuario = result;
       },
-      error => {
+      (error) => {
         console.error(JSON.stringify(error));
       }
     );
@@ -94,13 +88,13 @@ export class IntNewuserComponent implements OnInit {
     this.usuario.tipoUsuario.tipoUsuarioID = this.form.value.tipoUsuarioID;
 
     this.userService.addUser(this.usuario).subscribe(
-      result => {
+      (result) => {
         let action = "VOLVER";
         this.snackBar.open("Usuario registrado!", action, {
-          duration: 2000
+          duration: 2000,
         });
       },
-      error => {
+      (error) => {
         console.error(JSON.stringify(error));
       }
     );

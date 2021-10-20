@@ -1,10 +1,18 @@
 @import './src/styles.sass'
 
+
 .new-book-container
     width: 70%
     font-family: $generic-font
     h2
         margin-bottom: 16px
+
+    .newbook-wrapper
+        display: flex
+        flex-wrap: wrap-reverse
+        .book-info
+            max-width: 430px
+            padding-right: 1rem
 
 .invalid-feedback
     display: block
