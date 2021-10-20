@@ -14,10 +14,10 @@ export class BasicAuthInterceptorService implements HttpInterceptor {
   constructor() {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (sessionStorage.getItem("user") && sessionStorage.getItem("basicauth")) {
+    if (localStorage.getItem("user") && localStorage.getItem("basicauth")) {
       req = req.clone({
         setHeaders: {
-          Authorization: sessionStorage.getItem("basicauth")
+          Authorization: localStorage.getItem("basicauth")
         }
       });
     }

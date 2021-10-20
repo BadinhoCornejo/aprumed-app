@@ -42,7 +42,7 @@ export class SalesService {
   //Métodos para el carrito
 
   addItemCarrito(ejemplarID: number) {
-    this.user = JSON.parse(sessionStorage.getItem("user"));
+    this.user = JSON.parse(localStorage.getItem("user"));
 
     return this.httpClient.get(
       `api/sales/agregarCarrito/${this.user.usuarioID}/${ejemplarID}`,

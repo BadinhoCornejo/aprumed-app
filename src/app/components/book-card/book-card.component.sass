@@ -4,34 +4,37 @@
     display: flex
     flex-direction: column
     justify-content: center
+    align-items: center
+    margin: 0
+    margin-bottom: 1rem
 
-.info
-    display: flex
-    flex-direction: column
-    span
-        font-size: 14px
-    span:nth-last-child(1)
-        margin-top: 8px
-        font-size: 14px
-        font-weight: bold
+    img
+        max-height: 200px
+        width: 180px
 
-.mat-card
-    width: 224px
-    align-self: center
+    .info
+        display: grid
+        column-gap: 2
+        .id
+            p
+                margin-bottom: 0
+            span
+                font-size: 12px
+                font-weight: normal
+        span
+            margin-top: 8px
+            font-size: 14px
+            font-weight: bold
 
-button
-    @include clearButton()
-    font: $generic-font
-button:hover
-    i
-        margin-left: 4px
-        transform: rotate(15deg)
-        transition: 0.05s ease-in
+    button
+        @include clearButton()
+        font: $generic-font
+    button:hover
+        i
+            margin-left: 4px
+            transition: 0.05s ease-in
+            transform: rotate(15deg)
 
-img
-    height: 200px
-    width: 224px
-
-p
-    font-size: 16px
-    width: 100%
+    p
+        font-size: 16px
+        width: 100%

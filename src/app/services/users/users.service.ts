@@ -10,7 +10,7 @@ export class UsersService {
   private isAdminLog: Boolean = false;
   user: any;
   constructor(private httpClient: HttpClient) {
-    this.user = JSON.parse(sessionStorage.getItem("user"));
+    this.user = JSON.parse(localStorage.getItem("user"));
     console.log(this.user);
     if (this.user === null) {
       this.isAdminLog = false;

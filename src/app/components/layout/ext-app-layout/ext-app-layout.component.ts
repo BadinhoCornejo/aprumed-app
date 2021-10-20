@@ -19,7 +19,7 @@ export class ExtAppLayoutComponent implements OnInit {
     private toastr: ToastrService,
     private salesService: SalesService
   ) {
-    this.user = JSON.parse(sessionStorage.getItem("user"));
+    this.user = JSON.parse(localStorage.getItem("user"));
 
     if (this.user !== null) {
       this.welcomeName = this.user.nombre.split(" ", 1);

@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   submitted = false;
   user: any;
+  hide: boolean;
 
   constructor(
     private usersService: UsersService,
@@ -41,10 +42,10 @@ export class LoginComponent implements OnInit {
       result => {
         this.user = result;
         console.log(this.user);
-        this.user && sessionStorage.setItem("user", JSON.stringify(this.user));
+        this.user && localStorage.setItem("user", JSON.stringify(this.user));
         let authString =
           "Basic " + btoa(this.user.email + ":" + this.form.value.usrPassword);
-        sessionStorage.setItem("basicauth", authString);
+        localStorage.setItem("basicauth", authString);
         if (this.user.tipoUsuario.tipoUsuarioID === 1) {
           this.usersService.setIsAdminLog(false);
           this.router.navigateByUrl("");

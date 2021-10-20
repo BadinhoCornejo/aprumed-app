@@ -1,4 +1,4 @@
-<div class="base">
+<!-- <div class="base">
   <div class="books-container">
     <div class="categories">
       <div
@@ -19,18 +19,12 @@
       ¡Lo sentimos! No hemos podido encontrar libros
     </span>
   </div>
-</div>
+</div> -->
 
-<!--
- <div class="books-container" *ngIf="booksLength">
-    <mat-grid-list
-      [cols]="breakpoint"
-      [rowHeight]="rowHeight"
-      (window:resize)="onResize($event)"
-    >
-      <mat-grid-tile *ngFor="let ejemplar of ejemplares">
-        <app-book-card [ejemplar]="ejemplar"></app-book-card>
-      </mat-grid-tile>
-    </mat-grid-list>
+<div class="base">
+  <div class="books-container" *ngIf="booksLength">
+    <div *ngFor="let ejemplar of ejemplares">
+      <app-book-card [ejemplar]="ejemplar"></app-book-card>
+    </div>
   </div>
-  -->
+</div>

@@ -1,15 +1,13 @@
 <div class="card-container">
-  <p>{{ ejemplar.libro.titulo }}</p>
-  <mat-card>
-    <img mat-card-image src="{{ ejemplar.libro.portada.url }}" />
-    <mat-card-content>
-      <div class="info" id="{{ejemplar.ejemplarID}}">
-        <span>{{ ejemplar.libro.autor }}</span>
-        <span>S/ {{ ejemplar.libro.precio }}</span>
-      </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button (click)="addToCart(ejemplar)">Agregar al carrito <i class="fa fa-cart-plus" aria-hidden="true"></i></button>
-    </mat-card-actions>
-  </mat-card>
+  <img mat-card-image src="{{ ejemplar.libro.portada.url }}" />
+  <div class="info" id="{{ ejemplar.ejemplarID }}">
+    <div class="id">
+      <p>{{ ejemplar.libro.titulo }}</p>
+      <span>{{ ejemplar.libro.autor }}</span>
+    </div>
+    <span>S/ {{ ejemplar.libro.precio }}</span>
+  </div>
+  <button (click)="addToCart(ejemplar)">
+    Agregar al carrito <i class="fa fa-cart-plus" aria-hidden="true"></i>
+  </button>
 </div>
