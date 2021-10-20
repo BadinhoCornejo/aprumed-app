@@ -9,8 +9,22 @@ $idiomas-color: #540206
 $educacion-color: #577164
 $peruana-color: #D50017
 
-::ng-deep .mat-grid-tile
-    margin-bottom: 13px
+.wrapper
+    max-width: 1240px
+    display: flex
+    justify-content: center
+    margin: 0 auto
+
+.categories-container
+    width: 100%
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr))
+    gap: 20px
+
+::ng-deep .mat-chip-list
+    display: flex
+    justify-content: center
+    align-items: center
 
 .mat-chip
     cursor: pointer
