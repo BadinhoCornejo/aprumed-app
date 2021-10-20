@@ -12,7 +12,7 @@ button
     top: 0
     background-color: $base-color
     box-shadow: rgba(#000000, 0.1) 0px 4px 11px
-    @media screen and ( max-width: $tablet ) 
+    @media screen and ( max-width: $tablet )
         @include ph(1em, 1em)
 
     .left-side
@@ -24,8 +24,8 @@ button
             margin-right: 2em
             align-self: center
             cursor: pointer
-            @media screen and ( max-width: $phone ) 
-                display: none
+            @media screen and ( max-width: $phone )
+                font-size: 12px
 
 .center-side
     width: 100%
@@ -52,12 +52,13 @@ button
         margin-right: 2em
         font-family: $generic-font
         font-size: 16px
+        font-weight: normal
         @media screen and ( max-width: $phone )
             margin-right: 16px
         p
             margin-bottom: 0px
             @media screen and ( max-width: $phone )
-                display: none
+                font-size: 12px
         i
             font-size: 24px
             @media screen and ( max-width: $phone )
@@ -88,4 +89,3 @@ button
         font-size: 16px
         @include ph(4px, 10px)
         margin-right: 4px
-
