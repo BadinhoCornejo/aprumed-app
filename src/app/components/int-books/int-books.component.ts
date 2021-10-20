@@ -7,7 +7,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
   MatDialog,
-  MatSnackBar
+  MatSnackBar,
 } from "@angular/material";
 import {
   FormGroup,
@@ -15,7 +15,7 @@ import {
   FormBuilder,
   Validators,
   Form,
-  FormControl
+  FormControl,
 } from "@angular/forms";
 import { FirebaseStorageService } from "../../services/firebase/firebase-storage.service";
 import { CategoriesService } from "src/app/services/categories/categories.service";
@@ -23,7 +23,7 @@ import { CategoriesService } from "src/app/services/categories/categories.servic
 @Component({
   selector: "app-int-books",
   templateUrl: "./int-books.component.html",
-  styleUrls: ["./int-books.component.sass"]
+  styleUrls: ["./int-books.component.sass"],
 })
 export class IntBooksComponent implements OnInit {
   displayedColumns: string[] = [
@@ -36,7 +36,7 @@ export class IntBooksComponent implements OnInit {
     "categoria",
     "precio",
     "estado",
-    "opciones"
+    "opciones",
   ];
   books: any = [];
   dataSource: MatTableDataSource<any>;
@@ -56,14 +56,14 @@ export class IntBooksComponent implements OnInit {
 
   getBooks() {
     this.bookService.listarLibros().subscribe(
-      result => {
+      (result) => {
         this.books = result;
-        this.books.map(book => {
+        this.books.map((book) => {
           this.bookService.getLibroEjemplares(book.libroID).subscribe(
-            result => {
+            (result) => {
               book["ejemplares"] = result;
             },
-            error => {
+            (error) => {
               console.error(JSON.stringify(error));
             }
           );
@@ -72,7 +72,7 @@ export class IntBooksComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      error => {
+      (error) => {
         console.error(JSON.stringify(error));
       }
     );
@@ -86,16 +86,16 @@ export class IntBooksComponent implements OnInit {
     let action = "VOLVER";
     const dialogRef = this.dialog.open(DialogAddEjemplarDialog, {
       width: "550px",
-      data: { libroID: _id, titulo: _titulo }
+      data: { libroID: _id, titulo: _titulo },
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result !== undefined) {
         result === 1
           ? this.snackBar.open("Agregaste " + result + " ejemplar!", action, {
-              duration: 2000
+              duration: 2000,
             })
           : this.snackBar.open("Agregaste " + result + " ejemplares!", action, {
-              duration: 2000
+              duration: 2000,
             });
       }
 
@@ -105,9 +105,9 @@ export class IntBooksComponent implements OnInit {
   openEjemplaresDialog(_ejemplares: any) {
     const dialogRef = this.dialog.open(DialogEjemplaresDialog, {
       width: "550px",
-      data: { ejemplares: _ejemplares }
+      data: { ejemplares: _ejemplares },
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(result);
       this.getBooks();
     });
@@ -116,9 +116,9 @@ export class IntBooksComponent implements OnInit {
   openEditLibroDialog(_libro: any) {
     const dialogRef = this.dialog.open(DialogEditarLibroDialog, {
       width: "720px",
-      data: { libro: _libro }
+      data: { libro: _libro },
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       this.getBooks();
     });
   }
@@ -127,7 +127,7 @@ export class IntBooksComponent implements OnInit {
 //Modal para agregar ejemplar
 @Component({
   selector: "dialog-add-ejemplar-dialog",
-  templateUrl: "dialog-add-ejemplar-dialog.html"
+  templateUrl: "dialog-add-ejemplar-dialog.html",
 })
 export class DialogAddEjemplarDialog implements OnInit {
   dynamicForm: FormGroup;
@@ -147,7 +147,7 @@ export class DialogAddEjemplarDialog implements OnInit {
   ngOnInit() {
     this.dynamicForm = this.formBuilder.group({
       nEjemplares: ["", Validators.required],
-      items: new FormArray([])
+      items: new FormArray([]),
     });
   }
 
@@ -164,7 +164,7 @@ export class DialogAddEjemplarDialog implements OnInit {
       for (let i = this.e.length; i < nEjemplares; i++) {
         this.e.push(
           this.formBuilder.group({
-            sku: ["", [Validators.required, Validators.minLength(12)]]
+            sku: ["", [Validators.required, Validators.minLength(12)]],
           })
         );
       }
@@ -186,15 +186,15 @@ export class DialogAddEjemplarDialog implements OnInit {
 
     let ejemplares = result.items;
 
-    ejemplares.map(ejemplar => {
+    ejemplares.map((ejemplar) => {
       ejemplar["libro"] = this.libro;
     });
 
     this.booksService.agregarEjemplares(ejemplares).subscribe(
-      result => {
+      (result) => {
         console.log("success");
       },
-      error => {
+      (error) => {
         console.error(JSON.stringify(error));
       }
     );
@@ -207,7 +207,7 @@ export class DialogAddEjemplarDialog implements OnInit {
 //Modal para ver los ejemplares de un libro
 @Component({
   selector: "dialog-ejemplares-dialog",
-  templateUrl: "dialog-ejemplares-dialog.html"
+  templateUrl: "dialog-ejemplares-dialog.html",
 })
 export class DialogEjemplaresDialog implements OnInit {
   displayedColumns: string[] = ["position", "sku", "estado"];
@@ -257,7 +257,7 @@ export class DialogEjemplaresDialog implements OnInit {
 
     //Cambiar el estado de los objetos en el arreglo
     if (this.newEjemplares.length !== 0) {
-      this.newEjemplares.map(item => {
+      this.newEjemplares.map((item) => {
         if (item.sku !== ejemplar.sku) {
           this.newEjemplares.push(ejemplar);
         }
@@ -269,14 +269,14 @@ export class DialogEjemplaresDialog implements OnInit {
 
   deleteEjemplar() {
     this.bookService.deleteEjemplar(this.newEjemplares).subscribe(
-      result => {
+      (result) => {
         this.snackBar.open("Ejemplares actualizados!", "VOLVER", {
-          duration: 2000
+          duration: 2000,
         });
       },
-      error => {
+      (error) => {
         this.snackBar.open("Ups! Algo salió mal", "VOLVER", {
-          duration: 2000
+          duration: 2000,
         });
       }
     );
@@ -294,7 +294,7 @@ export class DialogEjemplaresDialog implements OnInit {
 //Modal para editar libro
 @Component({
   selector: "dialog-editar-libro-dialog",
-  templateUrl: "dialog-editar-libro-dialog.html"
+  templateUrl: "dialog-editar-libro-dialog.html",
 })
 export class DialogEditarLibroDialog implements OnInit {
   form: FormGroup;
@@ -308,31 +308,31 @@ export class DialogEditarLibroDialog implements OnInit {
     stock: "",
     titulo: "",
     categoria: {
-      categoriaID: ""
+      categoriaID: "",
     },
     estado: "",
     portada: {
       url: "",
       portadaID: "",
       estado: "",
-      nombrePortada: ""
-    }
+      nombrePortada: "",
+    },
   };
   portada: any = {
     url: "",
     portadaID: "",
     estado: "",
-    nombrePortada: ""
+    nombrePortada: "",
   };
   categoria: any = {
-    categoriaID: ""
+    categoriaID: "",
   };
   portadaID: any;
   categorias: any = [];
   color = "primary";
 
   public archivoForm = new FormGroup({
-    archivo: new FormControl(null, Validators.required)
+    archivo: new FormControl(null, Validators.required),
   });
 
   mensajeArchivo = "No hay un archivo seleccionado";
@@ -368,10 +368,10 @@ export class DialogEditarLibroDialog implements OnInit {
         this.libro.precio,
         Validators.compose([
           Validators.required,
-          Validators.pattern(`[0-9]+(\\.[0-9][0-9]?)?`)
-        ])
+          Validators.pattern(`[0-9]+(\\.[0-9][0-9]?)?`),
+        ]),
       ],
-      categoriaID: ["", Validators.required]
+      categoriaID: ["", Validators.required],
     });
   }
 
@@ -391,10 +391,10 @@ export class DialogEditarLibroDialog implements OnInit {
 
   getCategories() {
     this.categoriesService.listCategories().subscribe(
-      result => {
+      (result) => {
         this.categorias = result;
       },
-      error => {
+      (error) => {
         console.error(JSON.stringify(error));
       }
     );
@@ -426,7 +426,7 @@ export class DialogEditarLibroDialog implements OnInit {
 
     let verifyFile;
 
-    referencia.getDownloadURL().subscribe(URL => {
+    referencia.getDownloadURL().subscribe((URL) => {
       verifyFile = URL;
     });
 
@@ -437,7 +437,7 @@ export class DialogEditarLibroDialog implements OnInit {
       );
 
       //Cambia el porcentaje
-      tarea.percentageChanges().subscribe(porcentaje => {
+      tarea.percentageChanges().subscribe((porcentaje) => {
         this.isProgress = true;
         this.porcentaje = Math.round(porcentaje);
         if (this.porcentaje == 100) {
@@ -461,10 +461,10 @@ export class DialogEditarLibroDialog implements OnInit {
     let referencia = this.firebaseStorage.refPortada(this.nombreArchivo);
 
     const sub = referencia.getDownloadURL().subscribe(
-      URL => {
+      (URL) => {
         this.URLPublica = URL;
       },
-      error => {
+      (error) => {
         console.error(JSON.stringify(error));
       }
     );
@@ -498,23 +498,23 @@ export class DialogEditarLibroDialog implements OnInit {
     this.addPortada();
 
     this.booksService.findPortadaByName(this.portada).subscribe(
-      result => {
+      (result) => {
         this.libro.portada = result;
 
         this.booksService.editLibro(this.libro).subscribe(
-          result => {
+          (result) => {
             let action = "VOLVER";
             this.dialogRef.close();
             this.snackBar.open("Libro editado!", action, {
-              duration: 2000
+              duration: 2000,
             });
           },
-          error => {
+          (error) => {
             console.error(JSON.stringify(error));
           }
         );
       },
-      error => {
+      (error) => {
         console.error(JSON.stringify(error));
       }
     );
@@ -526,11 +526,11 @@ export class DialogEditarLibroDialog implements OnInit {
     this.portada["nombrePortada"] = this.nombreArchivo;
     this.portada["estado"] = "Activo";
     this.booksService.addPortada(this.portada).subscribe(
-      result => {
+      (result) => {
         console.log(result);
       },
 
-      error => {
+      (error) => {
         console.error(JSON.stringify(error));
       }
     );
