@@ -27,4 +27,10 @@
       <app-book-card [ejemplar]="ejemplar"></app-book-card>
     </div>
   </div>
+  <div class="noBooks" *ngIf="!booksLength">
+    <span class="sad"> 😢 </span>
+    <span class="message">
+      ¡Lo sentimos! Al parecer hubo un problema al cargar los productos 
+    </span>
+  </div>
 </div>
