@@ -371,7 +371,7 @@ export class DialogEditarLibroDialog implements OnInit {
           Validators.pattern(`[0-9]+(\\.[0-9][0-9]?)?`),
         ]),
       ],
-      categoriaID: ["", Validators.required],
+      categoriaID: [this.libro.categoria.categoriaID, Validators.required],
     });
   }
 

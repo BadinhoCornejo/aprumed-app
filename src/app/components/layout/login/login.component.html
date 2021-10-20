@@ -62,14 +62,15 @@
           </mat-form-field>
           <div class="sign-up-msg">
             <p>
-              ¿No tienes una cuenta?<span [routerLink]="['/signup']"
-                >Regístrate</span
-              >
+              ¿No tienes una cuenta?
+              <span style="font-size: 12px;">Pide una cuenta al administrador</span>
+              <!-- <span [routerLink]="['/signup']"
+                >Regístrate</span -->
             </p>
           </div>
-          <div class="pass-helper">
+          <!-- <div class="pass-helper">
             <p>¿Olvidaste tu contraseña?</p>
-          </div>
+          </div> -->
           <div class="button-container">
             <button mat-button type="submit" (click)="onSubmit(form)">
               ¡Vamos!

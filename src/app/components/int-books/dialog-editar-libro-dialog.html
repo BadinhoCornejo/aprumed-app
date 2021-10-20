@@ -247,7 +247,16 @@
           >
             <div class="file has-name is-boxed">
               <label class="file-label" *ngIf="!showPreview">
-                <i class="fa fa-image" aria-hidden="true"></i>
+                <img
+                  *ngIf="libro.portada.url"
+                  style="width: 200px; height: 200px"
+                  src="{{ libro.portada.url }}"
+                />
+                <i
+                  *ngIf="!libro.portada.url"
+                  class="fa fa-image"
+                  aria-hidden="true"
+                ></i>
               </label>
               <div class="portrait" *ngIf="showPreview">
                 <img src="{{ URLPublica }}" alt="portrait" />
@@ -257,7 +266,12 @@
                 type="file"
                 formControlName="archivo"
                 (change)="cambioArchivo($event)"
-                style="display: flex; flex-direction: column"
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  padding: 0;
+                  cursor: pointer;
+                "
               />
             </div>
             <hr />

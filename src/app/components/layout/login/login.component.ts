@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl("");
         } else if (this.user.tipoUsuario.tipoUsuarioID === 2) {
           this.usersService.setIsAdminLog(true);
-          this.router.navigateByUrl("admin");
+          this.router.navigateByUrl("admin/books");
         }
       },
       error => {

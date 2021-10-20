@@ -12,7 +12,7 @@ export class IntAppLayoutComponent implements OnInit {
   welcomeName: String;
 
   //For sidebar
-  opened = true;
+  opened = false;
   mode = "over";
   expandHeight = "42px";
   collapseHeight = "42px";
