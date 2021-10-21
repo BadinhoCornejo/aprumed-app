@@ -2,11 +2,12 @@
 
 .sale-core-container
     @include flex(row, space-around)
-    @media screen and ( max-width: $phone ) 
-        @include flex(column, center)
+    flex-wrap: wrap
+    // @media screen and ( max-width: $phone ) 
+    //     @include flex(column, center)
     .store-location-container
+        max-width: 300px
         @inlude flex(column, center)
-        width: 30%
         .recep
             font-family: $generic-font
             font-weight: 100
@@ -14,16 +15,15 @@
                 font-size: 20px
     .sale-detail-container
         @include flex(column, center)
-        width: 70%
         @include mh(22px, 22px)
-        .pay
-            width: 100%
-            @include flex(column, null)
-            span
-                font-family: $generic-font
-                font-size: 16px
-                font-weight: 100
-                align-self: flex-end
-                @include mv(16px, 16px)
-            button
-                align-self: flex-end
+
+.mat-dialog-footer
+    width: 100%
+    display: flex
+    justify-content: flex-end
+    span
+        font-family: $generic-font
+        font-size: 16px
+        font-weight: 100
+        @include mv(16px, 16px)
+        padding-right: 1rem

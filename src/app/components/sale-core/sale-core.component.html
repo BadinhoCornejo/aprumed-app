@@ -6,7 +6,7 @@
       <div class="recep">
         <h2>¿Quién recogerá el producto?</h2>
         <form [formGroup]="form">
-          <mat-form-field style="width: 100%;">
+          <mat-form-field style="width: 100%">
             <mat-label>DNI</mat-label>
             <input
               matInput
@@ -16,15 +16,13 @@
               [ngClass]="{ 'is-invalid': submitted && f.dni.errors }"
             />
             <div *ngIf="submitted && f.dni.errors" class="invalid-feedback">
-              <div *ngIf="f.dni.errors.required">
-                Este campo es requerido
-              </div>
+              <div *ngIf="f.dni.errors.required">Este campo es requerido</div>
               <div *ngIf="f.dni.errors.minlength">
                 Por favor ingrese un DNI válido
               </div>
             </div>
           </mat-form-field>
-          <mat-form-field style="width: 100%;">
+          <mat-form-field style="width: 100%">
             <mat-label>Nombre(s)</mat-label>
             <input
               matInput
@@ -39,7 +37,7 @@
               </div>
             </div>
           </mat-form-field>
-          <mat-form-field style="width: 100%;">
+          <mat-form-field style="width: 100%">
             <mat-label>Apellidos</mat-label>
             <input
               matInput
@@ -57,7 +55,7 @@
               </div>
             </div>
           </mat-form-field>
-          <mat-form-field style="width: 100%;">
+          <mat-form-field style="width: 100%">
             <mat-label>Teléfono</mat-label>
             <input
               matInput
@@ -79,11 +77,14 @@
       </div>
     </div>
     <div class="sale-detail-container">
-      <app-sale-detail [ejemplares]="ejemplares" [usuario]="usuario"></app-sale-detail>
-      <div class="pay">
-        <span>Subtotal: S/. {{subtotal}}</span>
-        <button mat-button (click)="doSale()">Realizar pago</button>
-      </div>
+      <app-sale-detail
+        [ejemplares]="ejemplares"
+        [usuario]="usuario"
+      ></app-sale-detail>
     </div>
   </div>
+</div>
+<div mat-dialog-actions class="mat-dialog-footer" *ngIf="prodCantidad !== 0">
+    <span>Subtotal: S/. {{ subtotal }}</span>
+    <button mat-button (click)="doSale()">Realizar pago</button>
 </div>
