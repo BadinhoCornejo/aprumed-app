@@ -1,7 +1,5 @@
 <h1 mat-dialog-title>Mi Carrito</h1>
-<h2 class="no-products" *ngIf="prodCantidad === 0">
-  Tu carrito está vacío
-</h2>
+<h2 class="no-products" *ngIf="prodCantidad === 0">Tu carrito está vacío</h2>
 <div mat-dialog-content *ngIf="prodCantidad !== 0">
   <div class="cart-component">
     <div class="left-side">
@@ -37,22 +35,23 @@
         </li>
       </ul>
     </div>
-    <div class="right-side" *ngIf="ejemplares.length > 1">
+    <div class="right-side" *ngIf="ejemplares.length">
+      <span class="total-label">Total</span>
+      <span class="total">S/ {{ total }}</span>
+      <div class="cantidad">
+        <p>Productos: {{ prodCantidad }}</p>
+      </div>
+    </div>
+    <!-- <div class="right-side-one" *ngIf="ejemplares.length === 1">
       <span class="total-label">Total</span>
       <span class="total">S/. {{ total }}</span>
       <div class="cantidad">
         <p>Productos: {{ prodCantidad }}</p>
       </div>
-    </div>
-    <div class="right-side-one" *ngIf="ejemplares.length === 1">
-      <span class="total-label">Total</span>
-      <span class="total">S/. {{ total }}</span>
-      <div class="cantidad">
-        <p>Productos: {{ prodCantidad }}</p>
-      </div>
-    </div>
+    </div> -->
   </div>
 </div>
 <div mat-dialog-actions class="mat-dialog-footer" *ngIf="prodCantidad !== 0">
+  <span class="total-bottom"> Total S/ {{ total }} </span>
   <button mat-button (click)="openSaleCore()">Comprar</button>
 </div>

@@ -10,10 +10,20 @@
 .cart-component
     @include flex(row,null)
     @include fill()
+    justify-content: space-between
+    align-items: center
+    height: 60vh
 
     .left-side
         align-self: flex-start
-        width: 60%
+        max-height: 60vh
+        overflow-y: auto
+        padding-right: 1rem
+        @media screen and (max-width: 560px)
+            width: 100%
+            @include flex(column, center)
+            .cart-list
+                padding-left: 0
         .cart-list
             @include flex(column, null)
             .cart-card
@@ -24,6 +34,9 @@
                 background-color: #F8F8F8
                 @include pv(16px, 16px)
                 border-radius: 4px
+                @media screen and (max-width: 560px)
+                    background-color: transparent
+                    padding: 0
                 &__top
                     font-size: 13px
                     align-self: center
@@ -74,9 +87,9 @@
                             font-size: 16px
                             font-weight: bold
     .right-side
-        position: absolute
-        margin-top: 225px
-        margin-left: 350px
+        @media screen and (max-width: 560px)
+            display: none
+
         .total
             @include flex(null, center)
             font-weight: 100
@@ -109,6 +122,12 @@
             margin-top: 8px
 .mat-dialog-footer
     width: 100%
-    @include flex(null, flex-end)
+    @include flex(row, flex-end)
     button
         margin-right: 16px
+
+.total-bottom
+    display: none
+    padding-right: 1rem
+    @media screen and (max-width: 560px)
+        display: block
