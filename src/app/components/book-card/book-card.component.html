@@ -1,5 +1,5 @@
 <div class="card-container">
-  <img mat-card-image src="{{ ejemplar.libro.portada.url }}" />
+  <img mat-card-image src="{{ ejemplar.libro.portada.url }}" (click)="openDetail()"/>
   <div class="info" id="{{ ejemplar.ejemplarID }}">
     <div class="id">
       <p>{{ ejemplar.libro.titulo }}</p>

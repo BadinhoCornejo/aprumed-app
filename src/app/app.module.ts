@@ -95,6 +95,7 @@ import { IntNewuserComponent } from "./components/int-newuser/int-newuser.compon
 import { SaleCoreComponent } from "./components/sale-core/sale-core.component";
 import { BasicAuthInterceptorService } from "./services/basic-auth-interceptor.service";
 import { BooksSectionComponent } from './components/books-section/books-section.component';
+import { BookDetailComponent } from './components/book-detail/book-detail.component';
 
 @NgModule({
   declarations: [
@@ -128,9 +129,11 @@ import { BooksSectionComponent } from './components/books-section/books-section.
     IntNewbookComponent,
     IntNewuserComponent,
     SaleCoreComponent,
-    BooksSectionComponent
+    BooksSectionComponent,
+    BookDetailComponent
   ],
   entryComponents: [
+    BookDetailComponent,
     DialogAddEjemplarDialog,
     DialogEjemplaresDialog,
     DialogEditarLibroDialog,
